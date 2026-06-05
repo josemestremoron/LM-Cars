@@ -1,0 +1,1071 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<title>LM AUTOS | Luxury Supercar Dealership Since 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:wght@300;400;500;600;700;900&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script src="https://cdn.sheetjs.com/xlsx-0.20.2/package/dist/xlsx.full.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+<style>
+:root{
+  --gold:#ffd700;
+  --gold-dark:#b8960c;
+  --gold-light:#ffe566;
+  --black:#000;
+  --dark:#0a0a0a;
+  --dark2:#111;
+  --dark3:#1a1a1a;
+  --white:#fff;
+  --gray:#888;
+  --gray-light:#ccc;
+  --green:#25D366;
+  --red:#c0392b;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{font-family:'Montserrat',sans-serif;background:var(--black);color:var(--white);overflow-x:hidden;}
+
+/* HERO BACKGROUND PREMIUM - GRADIENTE ANIMADO + LUZ */
+.hero-bg-premium {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -2;
+  background: radial-gradient(ellipse at 20% 30%, #1a1a2e 0%, #0a0a0a 60%, #000000 100%);
+  overflow: hidden;
+}
+.hero-bg-premium::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle at 30% 40%, rgba(255,215,0,0.08) 0%, transparent 50%);
+  animation: lightMove 12s ease-in-out infinite;
+}
+.hero-bg-premium::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 40%;
+  background: linear-gradient(0deg, rgba(0,0,0,0.8) 0%, transparent 100%);
+  pointer-events: none;
+}
+@keyframes lightMove {
+  0% { transform: translate(0%, 0%) rotate(0deg); opacity: 0.6; }
+  50% { transform: translate(5%, 5%) rotate(3deg); opacity: 1; }
+  100% { transform: translate(0%, 0%) rotate(0deg); opacity: 0.6; }
+}
+
+/* Partículas sutiles */
+.particles {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  pointer-events: none;
+}
+.particle {
+  position: absolute;
+  background: rgba(255,215,0,0.15);
+  border-radius: 50%;
+  animation: float 15s infinite ease-in-out;
+}
+@keyframes float {
+  0%, 100% { transform: translateY(0px) translateX(0px); opacity: 0; }
+  20% { opacity: 0.5; }
+  80% { opacity: 0.3; }
+  100% { transform: translateY(-100px) translateX(30px); opacity: 0; }
+}
+
+/* CURSOR */
+.cursor{position:fixed;width:10px;height:10px;background:var(--gold);border-radius:50%;pointer-events:none;z-index:99999;transform:translate(-50%,-50%);mix-blend-mode:difference;transition:width .2s,height .2s;}
+.cursor-ring{position:fixed;width:34px;height:34px;border:1px solid rgba(255,215,0,.5);border-radius:50%;pointer-events:none;z-index:99998;transform:translate(-50%,-50%);transition:all .12s ease-out;}
+
+/* HEADER */
+.header{position:fixed;top:0;left:0;right:0;z-index:1000;height:70px;padding:0 2rem;display:flex;align-items:center;justify-content:space-between;background:rgba(0,0,0,.88);backdrop-filter:blur(20px);border-bottom:1px solid rgba(255,215,0,.15);transition:all .3s;}
+.header.scrolled{background:rgba(0,0,0,.97);border-bottom-color:rgba(255,215,0,.3);}
+.logo-area{display:flex;align-items:center;gap:1.2rem;}
+.menu-btn{background:none;border:none;cursor:pointer;color:#fff;font-size:1.4rem;padding:.4rem;transition:color .3s;}
+.menu-btn:hover{color:var(--gold);}
+.logo-img{height:45px;width:auto;border-radius:4px;}
+.logo-text{font-family:'Bebas Neue',sans-serif;font-size:1.9rem;letter-spacing:5px;background:linear-gradient(135deg,#fff,var(--gold),#fff);-webkit-background-clip:text;background-clip:text;color:transparent;}
+.header-right{display:flex;align-items:center;gap:1.6rem;}
+.hicon{background:none;border:none;cursor:pointer;color:rgba(255,255,255,.7);font-size:1.05rem;transition:color .3s;position:relative;}
+.hicon:hover{color:var(--gold);}
+.lang-pill{background:rgba(255,215,0,.1);border:1px solid rgba(255,215,0,.3);padding:.25rem .7rem;border-radius:20px;font-size:.65rem;letter-spacing:2px;cursor:pointer;color:var(--gold);transition:all .3s;}
+.lang-pill:hover{background:var(--gold);color:var(--black);}
+
+/* OVERLAY */
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,0);z-index:1999;pointer-events:none;transition:background .4s;}
+.overlay.active{background:rgba(0,0,0,.75);pointer-events:all;}
+
+/* SIDE MENU */
+.side-menu{position:fixed;top:0;left:-460px;width:400px;height:100%;background:#070707;z-index:2000;transition:left .45s cubic-bezier(.22,1,.36,1);overflow-y:auto;border-right:1px solid rgba(255,215,0,.18);box-shadow:8px 0 50px rgba(0,0,0,.9);}
+.side-menu.open{left:0;}
+.side-menu::-webkit-scrollbar{width:3px;}
+.side-menu::-webkit-scrollbar-thumb{background:var(--gold-dark);}
+.sm-top{padding:1.4rem 1.8rem;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid rgba(255,215,0,.12);background:rgba(255,215,0,.02);}
+.sm-logo{font-family:'Bebas Neue',sans-serif;font-size:1.7rem;letter-spacing:4px;color:var(--gold);}
+.sm-close{background:none;border:none;color:var(--gray);font-size:1.3rem;cursor:pointer;transition:all .3s;padding:.3rem;}
+.sm-close:hover{color:var(--gold);transform:rotate(90deg);}
+.sm-body{padding:1.5rem 1.8rem;}
+.menu-cat{margin-bottom:1.2rem;border-bottom:1px solid rgba(255,255,255,.05);}
+.menu-cat-hdr{display:flex;justify-content:space-between;align-items:center;padding:.9rem 0;cursor:pointer;}
+.menu-cat-hdr:hover .mcat-title{color:var(--gold);}
+.mcat-title{font-size:.7rem;letter-spacing:4px;font-weight:700;text-transform:uppercase;color:var(--gray);transition:color .3s;display:flex;align-items:center;gap:.7rem;}
+.mcat-title i{color:var(--gold);font-size:.9rem;}
+.mcat-arrow{color:var(--gray);font-size:.65rem;transition:transform .3s,color .3s;}
+.menu-cat.open .mcat-arrow{transform:rotate(180deg);color:var(--gold);}
+.menu-cat.open .mcat-title{color:var(--gold);}
+.menu-items{max-height:0;overflow:hidden;transition:max-height .4s ease;}
+.menu-cat.open .menu-items{max-height:600px;}
+.mitem{display:flex;align-items:center;gap:.6rem;padding:.55rem .5rem;color:rgba(255,255,255,.55);font-size:.82rem;cursor:pointer;transition:all .2s;border-radius:3px;}
+.mitem:hover{color:#fff;background:rgba(255,215,0,.06);padding-left:1rem;}
+.mitem i{color:var(--gold);width:14px;font-size:.75rem;}
+
+/* HERO */
+.hero{min-height:100vh;display:flex;align-items:center;justify-content:center;text-align:center;padding:0 2rem;padding-top:70px;position:relative;z-index:1;}
+.hero-eyebrow{font-size:.65rem;letter-spacing:8px;color:var(--gold);text-transform:uppercase;margin-bottom:1.5rem;opacity:0;animation:fadeUp 1s .3s forwards;}
+.hero-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(4rem,11vw,11rem);line-height:.88;letter-spacing:3px;background:linear-gradient(135deg,#fff 0%,var(--gold) 50%,#fff 100%);-webkit-background-clip:text;background-clip:text;color:transparent;opacity:0;animation:fadeUp 1s .5s forwards;}
+.hero-sub{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(.9rem,2.2vw,1.2rem);color:rgba(255,255,255,.55);letter-spacing:3px;margin:1.8rem 0 2.5rem;opacity:0;animation:fadeUp 1s .7s forwards;}
+.hero-btn{display:inline-flex;align-items:center;gap:.8rem;padding:.9rem 2.5rem;border:1px solid var(--gold);background:transparent;color:var(--gold);font-family:'Montserrat',sans-serif;font-size:.7rem;font-weight:700;letter-spacing:4px;text-transform:uppercase;cursor:pointer;transition:all .3s;opacity:0;animation:fadeUp 1s .9s forwards;}
+.hero-btn:hover{background:var(--gold);color:var(--black);}
+.hero-btn:hover i{transform:translateX(5px);}
+.hero-btn i{transition:transform .3s;}
+
+.hero-stats{
+  position: absolute;
+  bottom: 2.5rem;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 4rem;
+  flex-wrap: wrap;
+  width: 100%;
+  text-align: center;
+  opacity: 0;
+  animation: fadeUp 1s 1.1s forwards;
+}
+.hstat-val{font-family:'Bebas Neue',sans-serif;font-size:2.4rem;color:var(--gold);letter-spacing:2px;}
+.hstat-lbl{font-size:.58rem;letter-spacing:3px;color:rgba(255,255,255,.35);text-transform:uppercase;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(28px);}to{opacity:1;transform:translateY(0);}}
+
+/* SECTION */
+.section{padding:5rem 2rem;}
+.sec-hdr{text-align:center;margin-bottom:3.5rem;}
+.sec-lbl{font-size:.62rem;letter-spacing:6px;color:var(--gold);text-transform:uppercase;margin-bottom:.8rem;}
+.sec-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(2.5rem,5vw,5rem);letter-spacing:3px;}
+.sec-line{width:60px;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent);margin:1.2rem auto 0;}
+
+/* MODEL CARDS */
+.models-grid{max-width:1500px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fill,minmax(370px,1fr));gap:2px;}
+.mcard{position:relative;overflow:hidden;aspect-ratio:4/3;cursor:pointer;background:var(--dark2);}
+.mcard img,.mcard video{width:100%;height:100%;object-fit:cover;transition:transform .8s ease,filter .5s;filter:brightness(.75) saturate(.9);}
+.mcard:hover img,.mcard:hover video{transform:scale(1.07);filter:brightness(.45) saturate(.7);}
+.mcard-overlay{position:absolute;inset:0;background:linear-gradient(180deg,transparent 25%,rgba(0,0,0,.96) 100%);display:flex;flex-direction:column;justify-content:flex-end;padding:1.8rem;}
+.mcard-tag{font-size:.58rem;letter-spacing:4px;color:var(--gold);text-transform:uppercase;margin-bottom:.3rem;}
+.mcard-name{font-family:'Bebas Neue',sans-serif;font-size:2rem;letter-spacing:3px;line-height:1;}
+.mcard-price{font-size:.82rem;color:rgba(255,255,255,.6);margin:.35rem 0 .9rem;letter-spacing:1px;}
+.mcard-specs{display:flex;gap:1.4rem;margin-bottom:1rem;}
+.mspec-val{font-family:'Bebas Neue',sans-serif;font-size:1.15rem;color:var(--gold);}
+.mspec-lbl{font-size:.52rem;letter-spacing:2px;color:rgba(255,255,255,.35);text-transform:uppercase;}
+.mcard-btns{display:flex;gap:.7rem;transform:translateY(18px);opacity:0;transition:all .4s;}
+.mcard:hover .mcard-btns{transform:translateY(0);opacity:1;}
+.btn-exp{padding:.5rem 1.3rem;border:1px solid var(--gold);background:transparent;color:var(--gold);font-size:.62rem;font-weight:700;letter-spacing:3px;cursor:pointer;transition:all .3s;text-transform:uppercase;font-family:'Montserrat',sans-serif;}
+.btn-exp:hover{background:var(--gold);color:var(--black);}
+.btn-bw{padding:.5rem 1.3rem;border:1px solid rgba(255,255,255,.18);background:rgba(255,255,255,.04);color:#fff;font-size:.62rem;font-weight:700;letter-spacing:2px;cursor:pointer;transition:all .3s;text-transform:uppercase;font-family:'Montserrat',sans-serif;}
+.btn-bw:hover{border-color:var(--gold);color:var(--gold);}
+.sold-badge{position:absolute;top:1rem;right:1rem;background:rgba(192,57,43,.85);padding:.3rem .8rem;font-size:.6rem;letter-spacing:3px;font-weight:700;text-transform:uppercase;border-radius:2px;}
+
+/* SERVICES / COMPANY / BEYOND SECTIONS */
+.info-section{background:rgba(255,215,0,.02);border-top:1px solid rgba(255,215,0,.08);border-bottom:1px solid rgba(255,215,0,.08);}
+.info-grid{max-width:1300px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:2rem;}
+.info-card{padding:2rem;border:1px solid rgba(255,255,255,.06);border-radius:4px;transition:all .3s;cursor:pointer;}
+.info-card:hover{border-color:rgba(255,215,0,.3);background:rgba(255,215,0,.04);}
+.info-card-icon{font-size:2rem;color:var(--gold);margin-bottom:1rem;}
+.info-card-title{font-family:'Bebas Neue',sans-serif;font-size:1.4rem;letter-spacing:2px;margin-bottom:.6rem;}
+.info-card-desc{font-size:.8rem;color:rgba(255,255,255,.65);line-height:1.7;}
+
+/* MERCH */
+.merch-grid{max-width:1300px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1.5rem;}
+.merch-card{background:var(--dark2);border:1px solid rgba(255,215,0,.1);border-radius:4px;overflow:hidden;transition:all .3s;}
+.merch-card:hover{border-color:rgba(255,215,0,.35);transform:translateY(-6px);}
+.merch-img{width:100%;height:200px;object-fit:cover;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#111,#1a1a1a);}
+.merch-body{padding:1.2rem;}
+.merch-name{font-family:'Bebas Neue',sans-serif;font-size:1.3rem;letter-spacing:2px;margin-bottom:.3rem;}
+.merch-price{color:var(--gold);font-size:.85rem;font-weight:600;margin-bottom:.8rem;}
+.merch-btn{width:100%;padding:.6rem;background:transparent;border:1px solid var(--gold);color:var(--gold);font-size:.65rem;letter-spacing:3px;cursor:pointer;transition:all .3s;font-family:'Montserrat',sans-serif;font-weight:700;}
+.merch-btn:hover{background:var(--gold);color:var(--black);}
+
+/* DETAIL PAGE */
+#detailPage{position:fixed;inset:0;background:#000;z-index:3000;display:none;overflow-y:auto;}
+.det-hero{position:relative;width:100%;height:65vh;overflow:hidden;}
+.det-hero video,.det-hero img{width:100%;height:100%;object-fit:cover;filter:brightness(.6);}
+.det-hero-overlay{position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.35) 0%,rgba(0,0,0,.95) 100%);display:flex;align-items:flex-end;padding:3rem;}
+.btn-close-det{position:absolute;top:1.2rem;right:1.2rem;width:42px;height:42px;border-radius:50%;background:rgba(0,0,0,.7);border:1px solid rgba(255,215,0,.3);color:#fff;font-size:.95rem;cursor:pointer;z-index:10;display:flex;align-items:center;justify-content:center;transition:all .3s;}
+.btn-close-det:hover{background:var(--gold);color:var(--black);}
+.det-tag{font-size:.6rem;letter-spacing:5px;color:var(--gold);text-transform:uppercase;margin-bottom:.4rem;}
+.det-name{font-family:'Bebas Neue',sans-serif;font-size:clamp(3rem,7vw,7rem);letter-spacing:3px;line-height:1;}
+.det-price-disp{font-size:1.1rem;color:rgba(255,255,255,.65);letter-spacing:3px;margin-top:.3rem;}
+.det-body{max-width:1100px;margin:0 auto;padding:3rem 2rem 5rem;}
+.det-specs{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:1px;background:rgba(255,215,0,.08);border:1px solid rgba(255,215,0,.12);border-radius:3px;overflow:hidden;margin-bottom:2.5rem;}
+.det-spec{padding:1.8rem 1.2rem;background:rgba(8,8,8,.95);text-align:center;border-right:1px solid rgba(255,215,0,.06);}
+.det-spec:last-child{border-right:none;}
+.det-spec-val{font-family:'Bebas Neue',sans-serif;font-size:2.2rem;color:var(--gold);letter-spacing:2px;}
+.det-spec-lbl{font-size:.55rem;letter-spacing:3px;color:rgba(255,255,255,.35);text-transform:uppercase;margin-top:.3rem;}
+.det-desc{font-family:'Cormorant Garamond',serif;font-size:1.15rem;color:rgba(255,255,255,.55);line-height:1.85;margin-bottom:2.5rem;max-width:680px;}
+.det-actions{display:flex;gap:1rem;flex-wrap:wrap;}
+.btn-det-buy{padding:1rem 2.5rem;background:var(--gold);color:var(--black);border:none;font-weight:700;font-size:.7rem;letter-spacing:3px;text-transform:uppercase;cursor:pointer;transition:all .3s;font-family:'Montserrat',sans-serif;}
+.btn-det-buy:hover{background:var(--gold-light);}
+.btn-det-back{padding:1rem 2.5rem;background:transparent;color:rgba(255,255,255,.5);border:1px solid rgba(255,255,255,.18);font-size:.7rem;letter-spacing:3px;text-transform:uppercase;cursor:pointer;transition:all .3s;font-family:'Montserrat',sans-serif;}
+.btn-det-back:hover{color:#fff;border-color:#fff;}
+
+/* PURCHASE MODAL */
+#purchaseModal{position:fixed;inset:0;z-index:4000;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,.97);padding:1rem;}
+.purch-wrap{background:var(--dark2);border:1px solid rgba(255,215,0,.22);border-radius:4px;width:100%;max-width:560px;max-height:90vh;overflow-y:auto;}
+.purch-wrap::-webkit-scrollbar{width:3px;}
+.purch-wrap::-webkit-scrollbar-thumb{background:var(--gold-dark);}
+.purch-top{background:linear-gradient(135deg,var(--gold-dark),var(--gold));padding:1.4rem 1.8rem;display:flex;justify-content:space-between;align-items:center;}
+.purch-top h2{font-family:'Bebas Neue',sans-serif;font-size:1.7rem;letter-spacing:3px;color:var(--black);}
+.purch-close{background:none;border:none;font-size:1.2rem;cursor:pointer;color:rgba(0,0,0,.6);transition:color .2s;}
+.purch-close:hover{color:var(--black);}
+.purch-body{padding:1.8rem;}
+.car-info-box{background:rgba(255,215,0,.05);border:1px solid rgba(255,215,0,.12);border-radius:3px;padding:1rem;margin-bottom:1.6rem;display:flex;align-items:center;gap:1rem;}
+.car-info-box img{width:80px;height:55px;object-fit:cover;border-radius:2px;}
+.purch-label{font-size:.62rem;letter-spacing:3px;color:var(--gold);text-transform:uppercase;margin-bottom:.5rem;display:flex;align-items:center;gap:.5rem;}
+.purch-input{width:100%;padding:.82rem 1rem;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);color:#fff;font-size:.88rem;border-radius:2px;margin-bottom:1.1rem;transition:border-color .3s;font-family:'Montserrat',sans-serif;}
+.purch-input:focus{outline:none;border-color:var(--gold);}
+.purch-input::placeholder{color:rgba(255,255,255,.28);}
+.deco-grid{display:grid;gap:.55rem;margin-bottom:1.4rem;}
+.deco-opt{display:flex;justify-content:space-between;align-items:center;padding:.9rem 1.1rem;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);border-radius:3px;cursor:pointer;transition:all .25s;}
+.deco-opt:hover{border-color:rgba(255,215,0,.4);background:rgba(255,215,0,.05);}
+.deco-opt.selected{border-color:var(--gold);background:rgba(255,215,0,.08);}
+.deco-name{font-size:.82rem;display:flex;align-items:center;gap:.6rem;}
+.deco-price{font-size:.78rem;color:var(--gold);font-weight:600;}
+.price-breakdown{background:rgba(0,0,0,.4);border-radius:3px;padding:1.1rem;margin-bottom:1.4rem;}
+.price-row{display:flex;justify-content:space-between;padding:.45rem 0;font-size:.83rem;color:rgba(255,255,255,.55);border-bottom:1px solid rgba(255,255,255,.05);}
+.price-row:last-child{border-bottom:none;font-size:1.05rem;color:var(--gold);font-weight:700;margin-top:.3rem;}
+.btn-confirm{width:100%;padding:1.05rem;background:linear-gradient(135deg,var(--gold-dark),var(--gold));border:none;color:var(--black);font-family:'Montserrat',sans-serif;font-size:.72rem;font-weight:700;letter-spacing:4px;text-transform:uppercase;cursor:pointer;border-radius:2px;transition:all .3s;}
+.btn-confirm:hover{opacity:.9;transform:translateY(-1px);}
+
+/* AUTH MODAL */
+#authModal{position:fixed;inset:0;z-index:5000;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,.97);}
+.auth-wrap{background:var(--dark2);border:1px solid rgba(255,215,0,.22);border-radius:4px;width:100%;max-width:400px;padding:2.2rem;}
+.auth-title{font-family:'Bebas Neue',sans-serif;font-size:2rem;letter-spacing:4px;color:var(--gold);margin-bottom:1.8rem;text-align:center;display:flex;align-items:center;justify-content:center;gap:.7rem;}
+.auth-tabs-row{display:flex;gap:0;margin-bottom:1.8rem;border:1px solid rgba(255,215,0,.2);border-radius:2px;overflow:hidden;}
+.auth-tab{flex:1;padding:.7rem;background:transparent;border:none;color:rgba(255,255,255,.45);font-size:.68rem;letter-spacing:3px;text-transform:uppercase;cursor:pointer;transition:all .3s;font-family:'Montserrat',sans-serif;display:flex;align-items:center;justify-content:center;gap:.5rem;}
+.auth-tab.active{background:var(--gold);color:var(--black);font-weight:700;}
+.auth-input{width:100%;padding:.82rem 1rem;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);color:#fff;font-size:.88rem;margin-bottom:.9rem;border-radius:2px;transition:border-color .3s;font-family:'Montserrat',sans-serif;display:flex;}
+.auth-input:focus{outline:none;border-color:var(--gold);}
+.auth-input::placeholder{color:rgba(255,255,255,.28);}
+.btn-auth{width:100%;padding:.88rem;background:var(--gold);border:none;color:var(--black);font-weight:700;font-size:.72rem;letter-spacing:3px;text-transform:uppercase;cursor:pointer;border-radius:2px;margin-top:.3rem;font-family:'Montserrat',sans-serif;transition:all .3s;display:flex;align-items:center;justify-content:center;gap:.6rem;}
+.btn-auth:hover{background:var(--gold-light);}
+.auth-hint{text-align:center;margin-top:1rem;font-size:.68rem;color:rgba(255,255,255,.25);letter-spacing:2px;}
+.btn-auth-cancel{display:block;width:100%;padding:.65rem;background:transparent;border:1px solid rgba(255,255,255,.08);color:rgba(255,255,255,.3);font-size:.62rem;letter-spacing:2px;text-transform:uppercase;cursor:pointer;margin-top:.7rem;border-radius:2px;font-family:'Montserrat',sans-serif;transition:all .3s;}
+.btn-auth-cancel:hover{border-color:var(--gold);color:var(--gold);}
+
+/* ADMIN PANEL */
+#adminPanel{display:none;max-width:1450px;margin:0 auto;padding:3rem 2rem;}
+.adm-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:2rem;padding-bottom:1.4rem;border-bottom:1px solid rgba(255,215,0,.18);flex-wrap:wrap;gap:1rem;}
+.adm-title{font-family:'Bebas Neue',sans-serif;font-size:2.3rem;letter-spacing:4px;color:var(--gold);display:flex;align-items:center;gap:.7rem;}
+.adm-actions{display:flex;gap:.8rem;flex-wrap:wrap;}
+.btn-excel{padding:.6rem 1.4rem;background:rgba(0,120,0,.25);border:1px solid rgba(0,180,0,.4);color:#55dd55;font-size:.65rem;letter-spacing:2px;text-transform:uppercase;cursor:pointer;border-radius:2px;font-family:'Montserrat',sans-serif;transition:all .3s;display:flex;align-items:center;gap:.5rem;}
+.btn-excel:hover{background:rgba(0,150,0,.4);}
+.btn-logout{padding:.6rem 1.4rem;background:rgba(139,0,0,.3);border:1px solid rgba(200,0,0,.4);color:#ff6666;font-size:.65rem;letter-spacing:2px;text-transform:uppercase;cursor:pointer;border-radius:2px;font-family:'Montserrat',sans-serif;transition:all .3s;display:flex;align-items:center;gap:.5rem;}
+.btn-logout:hover{background:rgba(200,0,0,.4);}
+
+.adm-tabs{display:flex;gap:.4rem;margin-bottom:2rem;flex-wrap:wrap;border-bottom:1px solid rgba(255,255,255,.06);padding-bottom:0;}
+.adm-tab{padding:.65rem 1.4rem;background:transparent;border:none;border-bottom:2px solid transparent;color:rgba(255,255,255,.4);font-size:.65rem;letter-spacing:2px;text-transform:uppercase;cursor:pointer;transition:all .3s;font-family:'Montserrat',sans-serif;display:flex;align-items:center;gap:.5rem;margin-bottom:-1px;}
+.adm-tab.active{color:var(--gold);border-bottom-color:var(--gold);}
+.adm-tab:hover{color:rgba(255,215,0,.7);}
+
+.adm-content{display:none;animation:fadeIn .3s ease;}
+.adm-content.active{display:block;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
+
+.stats-row{
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+.stat-box{
+  background: var(--dark2);
+  border: 1px solid rgba(255,215,0,.12);
+  border-radius: 16px;
+  padding: 2rem 1.5rem;
+  border-left: 4px solid var(--gold);
+  transition: transform .3s, box-shadow .3s;
+  text-align: center;
+}
+.stat-box:hover{
+  transform: translateY(-6px);
+  box-shadow: 0 15px 35px rgba(255,215,0,.12);
+}
+.stat-box-icon{font-size: 2rem;color: var(--gold);margin-bottom: 1rem;opacity:.8;}
+.stat-box-val{
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 2.8rem;
+  color: var(--gold);
+  letter-spacing: 3px;
+  font-weight: 700;
+}
+.stat-box-lbl{
+  font-size: .7rem;
+  letter-spacing: 4px;
+  color: rgba(255,255,255,.45);
+  text-transform: uppercase;
+  margin-top: .5rem;
+}
+
+.charts-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(380px,1fr));gap:1.5rem;margin-bottom:2rem;}
+.chart-box{background:var(--dark2);border:1px solid rgba(255,215,0,.1);border-radius:4px;padding:1.5rem;}
+.chart-box-title{font-size:.62rem;letter-spacing:3px;color:var(--gold);text-transform:uppercase;margin-bottom:1rem;}
+.chart-container{position:relative;height:250px;}
+
+.tbl-wrap{overflow-x:auto;background:var(--dark2);border:1px solid rgba(255,215,0,.1);border-radius:4px;}
+.tbl-toolbar{padding:1rem 1.2rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.8rem;border-bottom:1px solid rgba(255,255,255,.05);}
+.tbl-toolbar-title{font-size:.65rem;letter-spacing:3px;color:var(--gold);text-transform:uppercase;}
+.tbl-search{padding:.5rem .9rem;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);color:#fff;font-size:.8rem;border-radius:2px;width:220px;font-family:'Montserrat',sans-serif;}
+.tbl-search:focus{outline:none;border-color:var(--gold);}
+table{width:100%;border-collapse:collapse;}
+thead th{padding:.9rem 1rem;text-align:left;font-size:.6rem;letter-spacing:3px;color:var(--gold);text-transform:uppercase;border-bottom:1px solid rgba(255,215,0,.15);white-space:nowrap;}
+tbody td{padding:.88rem 1rem;font-size:.82rem;color:rgba(255,255,255,.65);border-bottom:1px solid rgba(255,255,255,.04);white-space:nowrap;}
+tbody tr:hover td{background:rgba(255,215,0,.025);}
+.badge-ok{padding:.2rem .75rem;background:rgba(0,180,80,.12);border:1px solid rgba(0,200,80,.25);color:#44dd88;font-size:.6rem;letter-spacing:2px;border-radius:20px;}
+.badge-sold{padding:.2rem .75rem;background:rgba(180,0,0,.15);border:1px solid rgba(200,50,50,.3);color:#ff8888;font-size:.6rem;letter-spacing:2px;border-radius:20px;}
+.tbl-img{width:55px;height:38px;object-fit:cover;border-radius:2px;}
+.btn-tbl{padding:.28rem .75rem;font-size:.6rem;letter-spacing:1px;border-radius:2px;cursor:pointer;border:1px solid;font-family:'Montserrat',sans-serif;transition:all .2s;margin:0 .15rem;}
+.btn-edit{background:rgba(255,215,0,.1);border-color:rgba(255,215,0,.3);color:var(--gold);}
+.btn-edit:hover{background:rgba(255,215,0,.2);}
+.btn-del{background:rgba(139,0,0,.2);border-color:rgba(200,0,0,.3);color:#ff6666;}
+.btn-del:hover{background:rgba(200,0,0,.35);}
+.btn-view{background:rgba(0,100,200,.2);border-color:rgba(0,150,255,.3);color:#55aaff;}
+.btn-view:hover{background:rgba(0,120,220,.3);}
+.btn-sell{background:rgba(0,130,60,.2);border-color:rgba(0,180,80,.3);color:#44dd88;}
+.btn-sell:hover{background:rgba(0,150,70,.3);}
+
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;}
+.form-group{display:flex;flex-direction:column;gap:.4rem;}
+.form-group label{font-size:.6rem;letter-spacing:3px;color:var(--gold);text-transform:uppercase;display:flex;align-items:center;gap:.5rem;}
+.form-control{padding:.75rem .9rem;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);color:#fff;font-size:.85rem;border-radius:2px;transition:border-color .3s;font-family:'Montserrat',sans-serif;}
+.form-control:focus{outline:none;border-color:var(--gold);}
+.form-control::placeholder{color:rgba(255,255,255,.25);}
+.form-full{grid-column:1/-1;}
+.btn-primary{padding:.75rem 2rem;background:var(--gold);border:none;color:var(--black);font-weight:700;font-size:.68rem;letter-spacing:3px;text-transform:uppercase;cursor:pointer;border-radius:2px;font-family:'Montserrat',sans-serif;transition:all .3s;display:inline-flex;align-items:center;gap:.5rem;}
+.btn-primary:hover{background:var(--gold-light);}
+.btn-secondary{padding:.75rem 2rem;background:transparent;border:1px solid rgba(255,255,255,.18);color:rgba(255,255,255,.6);font-weight:500;font-size:.68rem;letter-spacing:3px;text-transform:uppercase;cursor:pointer;border-radius:2px;font-family:'Montserrat',sans-serif;transition:all .3s;display:inline-flex;align-items:center;gap:.5rem;}
+.btn-secondary:hover{border-color:#fff;color:#fff;}
+
+.gmodal{position:fixed;inset:0;z-index:6000;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,.97);padding:1rem;}
+.gmodal-inner{background:var(--dark2);border:1px solid rgba(255,215,0,.2);border-radius:4px;width:100%;max-width:680px;max-height:90vh;overflow-y:auto;}
+.gmodal-inner::-webkit-scrollbar{width:3px;}
+.gmodal-inner::-webkit-scrollbar-thumb{background:var(--gold-dark);}
+.gmodal-top{background:rgba(255,215,0,.06);padding:1.3rem 1.8rem;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid rgba(255,215,0,.12);}
+.gmodal-title{font-family:'Bebas Neue',sans-serif;font-size:1.6rem;letter-spacing:3px;color:var(--gold);display:flex;align-items:center;gap:.6rem;}
+.gmodal-close{background:none;border:none;color:var(--gray);font-size:1.2rem;cursor:pointer;transition:color .2s;}
+.gmodal-close:hover{color:var(--gold);}
+.gmodal-body{padding:1.8rem;}
+
+.inv-detail{font-size:.85rem;}
+.inv-detail-row{display:flex;justify-content:space-between;padding:.55rem 0;border-bottom:1px solid rgba(255,255,255,.05);color:rgba(255,255,255,.6);}
+.inv-detail-row span:last-child{color:#fff;font-weight:500;}
+.inv-total-row{display:flex;justify-content:space-between;padding:.8rem 0;font-size:1rem;color:var(--gold);font-weight:700;margin-top:.5rem;}
+
+.kpi-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1.2rem;margin-bottom:2rem;}
+.kpi-card{background:var(--dark2);border:1px solid rgba(255,215,0,.1);border-radius:4px;padding:1.5rem;position:relative;overflow:hidden;}
+.kpi-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent);}
+.kpi-icon{font-size:1.6rem;margin-bottom:.7rem;opacity:.6;}
+.kpi-val{font-family:'Bebas Neue',sans-serif;font-size:2rem;color:var(--gold);letter-spacing:2px;}
+.kpi-lbl{font-size:.58rem;letter-spacing:3px;color:rgba(255,255,255,.3);text-transform:uppercase;margin-top:.2rem;}
+
+.chat-fab{position:fixed;bottom:2rem;right:2rem;width:56px;height:56px;border-radius:50%;background:var(--green);border:none;cursor:pointer;z-index:900;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(37,211,102,.45);transition:all .3s;}
+.chat-fab:hover{transform:scale(1.08);}
+.chat-fab i{font-size:1.5rem;color:#fff;}
+.chat-badge-dot{position:absolute;top:-2px;right:-2px;width:16px;height:16px;border-radius:50%;background:var(--gold);color:var(--black);font-size:.55rem;font-weight:700;display:flex;align-items:center;justify-content:center;}
+#chatBox{position:fixed;bottom:95px;right:2rem;width:330px;background:var(--dark2);border:1px solid rgba(255,215,0,.18);border-radius:12px;overflow:hidden;box-shadow:0 20px 50px rgba(0,0,0,.8);z-index:900;display:none;animation:slideUp .3s ease;}
+@keyframes slideUp{from{opacity:0;transform:translateY(15px);}to{opacity:1;transform:translateY(0);}}
+.chat-top{background:linear-gradient(135deg,#128C7E,var(--green));padding:.9rem 1.1rem;display:flex;justify-content:space-between;align-items:center;}
+.chat-av{width:34px;height:34px;border-radius:50%;background:rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;font-size:1.1rem;}
+.chat-close-btn{background:none;border:none;color:rgba(255,255,255,.7);cursor:pointer;font-size:.95rem;}
+.chat-msgs{height:240px;overflow-y:auto;padding:.9rem;display:flex;flex-direction:column;gap:.7rem;}
+.chat-msgs::-webkit-scrollbar{width:2px;}
+.chat-msgs::-webkit-scrollbar-thumb{background:rgba(255,215,0,.3);}
+.msg-bot{padding:.65rem .95rem;background:rgba(255,215,0,.08);border:1px solid rgba(255,215,0,.12);border-radius:8px;max-width:85%;font-size:.78rem;line-height:1.5;align-self:flex-start;}
+.msg-user{padding:.65rem .95rem;background:rgba(255,255,255,.06);border-radius:8px;max-width:85%;font-size:.78rem;line-height:1.5;align-self:flex-end;}
+.chat-input-row{padding:.75rem;display:flex;gap:.5rem;border-top:1px solid rgba(255,255,255,.06);}
+.chat-txt{flex:1;padding:.55rem .85rem;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);color:#fff;font-size:.78rem;border-radius:20px;font-family:'Montserrat',sans-serif;}
+.chat-txt:focus{outline:none;border-color:var(--gold);}
+.chat-send-btn{width:34px;height:34px;border-radius:50%;background:var(--gold);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s;flex-shrink:0;}
+.chat-send-btn:hover{background:var(--gold-light);}
+
+.toast{position:fixed;bottom:5.5rem;left:50%;transform:translateX(-50%) translateY(20px);background:var(--dark2);border:1px solid rgba(255,215,0,.3);padding:.9rem 1.8rem;border-radius:3px;font-size:.75rem;letter-spacing:2px;z-index:9999;opacity:0;transition:all .35s;pointer-events:none;white-space:nowrap;}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+
+.footer{background:rgba(0,0,0,.96);border-top:1px solid rgba(255,215,0,.08);padding:4rem 2rem 2rem;margin-top:4rem;}
+.footer-grid{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:3rem;margin-bottom:3rem;}
+.footer-brand{font-family:'Bebas Neue',sans-serif;font-size:2.3rem;letter-spacing:4px;color:var(--gold);margin-bottom:.7rem;}
+.footer-desc{font-size:.78rem;color:rgba(255,255,255,.35);line-height:1.8;margin-bottom:1.5rem;}
+.footer-socials{display:flex;gap:.8rem;}
+.fsoc{width:36px;height:36px;border-radius:50%;border:1px solid rgba(255,255,255,.1);display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,.4);font-size:.85rem;cursor:pointer;transition:all .3s;}
+.fsoc:hover{border-color:var(--gold);color:var(--gold);}
+.fcol-title{font-size:.6rem;letter-spacing:4px;color:var(--gold);text-transform:uppercase;margin-bottom:1rem;}
+.flink{display:flex;align-items:center;gap:.5rem;font-size:.78rem;color:rgba(255,255,255,.35);text-decoration:none;margin-bottom:.55rem;cursor:pointer;transition:color .2s;}
+.flink:hover{color:#fff;}
+.flink i{color:var(--gold);font-size:.7rem;width:12px;}
+.footer-bottom{max-width:1200px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;padding-top:2rem;border-top:1px solid rgba(255,255,255,.05);flex-wrap:wrap;gap:1rem;}
+.footer-copy{font-size:.62rem;color:rgba(255,255,255,.2);letter-spacing:2px;}
+
+#langModal{position:fixed;inset:0;z-index:7000;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,.95);}
+.lang-wrap{background:var(--dark2);border:1px solid rgba(255,215,0,.2);border-radius:4px;padding:2rem;width:320px;}
+.lang-title{font-family:'Bebas Neue',sans-serif;font-size:1.8rem;letter-spacing:3px;color:var(--gold);margin-bottom:1.5rem;text-align:center;}
+.lang-opts{display:grid;gap:.6rem;}
+.lang-opt{display:flex;align-items:center;gap:.9rem;padding:.9rem 1rem;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);border-radius:3px;cursor:pointer;transition:all .25s;font-size:.85rem;}
+.lang-opt:hover,.lang-opt.active{border-color:var(--gold);background:rgba(255,215,0,.07);color:var(--gold);}
+.lang-opt .flag{font-size:1.3rem;}
+
+/* FORZAR VISIBILIDAD DE TODAS LAS TARJETAS - FIX DEFINITIVO */
+#servicesSection .info-card,
+#companySection .info-card,
+#merchSection .merch-card {
+    opacity: 1 !important;
+    transform: translate(0px, 0px) !important;
+    visibility: visible !important;
+}
+
+@media(max-width:1000px){.footer-grid{grid-template-columns:1fr 1fr;}.charts-row{grid-template-columns:1fr;}}
+@media(max-width:700px){.side-menu{width:88%;left:-88%;}.hero-title{font-size:4.5rem;}.models-grid{grid-template-columns:1fr;}.footer-grid{grid-template-columns:1fr;}.form-grid{grid-template-columns:1fr;}.hero-stats{gap:1.5rem;}.header{padding:0 1rem;}.logo-text{font-size:1.5rem;}}
+@media(max-width:480px){.hero-stats{gap:1rem;}.hstat-val{font-size:1.8rem;}}
+
+/* DESACTIVAR ANIMACIONES SOLO EN LAS TARJETAS DEL ADMIN PANEL */
+#adminPanel .stat-box,
+#adminPanel .kpi-card {
+    opacity: 1 !important;
+    transform: none !important;
+    animation: none !important;
+}
+
+#adminPanel .stat-box-val {
+    font-size: 2.8rem !important;
+}
+
+/* CORREGIR TABLA DE PRODUCTS EN ADMIN PANEL */
+#admProducts table th,
+#admProducts table td {
+    padding: 12px 16px !important;
+    text-align: left !important;
+}
+
+#admProducts table th {
+    background: var(--dark2) !important;
+    color: var(--gold) !important;
+    font-size: 0.7rem !important;
+    letter-spacing: 2px !important;
+    text-transform: uppercase !important;
+    border-bottom: 1px solid rgba(255,215,0,0.2) !important;
+}
+
+#admProducts table td {
+    color: rgba(255,255,255,0.7) !important;
+    font-size: 0.85rem !important;
+    border-bottom: 1px solid rgba(255,255,255,0.05) !important;
+}
+
+#admProducts .tbl-wrap {
+    overflow-x: auto;
+    border-radius: 8px;
+}
+</style>
+</head>
+<body>
+
+<div class="hero-bg-premium"></div>
+<div class="particles" id="particles"></div>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<div class="bg-overlay"></div>
+<div class="toast" id="toast"></div>
+
+<!-- HEADER -->
+<header class="header" id="header">
+  <div class="logo-area">
+    <button class="menu-btn" onclick="toggleMenu()"><i class="fas fa-bars"></i></button>
+    <img src="https://i.imgur.com/xHbVLT1.png" alt="LM Autos" class="logo-img">
+    <span class="logo-text">LM AUTOS</span>
+  </div>
+  <div class="header-right">
+    <button class="hicon" onclick="document.getElementById('modelsSection').scrollIntoView({behavior:'smooth'})"><i class="fas fa-car-side"></i></button>
+    <button class="hicon" onclick="showToast('🔍 Search coming soon')"><i class="fas fa-search"></i></button>
+    <button class="lang-pill" onclick="openLang()"><i class="fas fa-globe"></i> <span id="langLabel">EN</span></button>
+    <button class="hicon" onclick="openAuth()"><i class="fas fa-user-circle"></i></button>
+    <button class="hicon" onclick="toggleChat()"><i class="fas fa-comment-dots"></i></button>
+  </div>
+</header>
+
+<div class="overlay" id="overlay" onclick="closeMenu()"></div>
+
+<!-- SIDE MENU -->
+<nav class="side-menu" id="sideMenu">
+  <div class="sm-top">
+    <span class="sm-logo">🏎️ LM AUTOS</span>
+    <button class="sm-close" onclick="closeMenu()"><i class="fas fa-times"></i></button>
+  </div>
+  <div class="sm-body">
+    <div class="menu-cat open" id="catModels">
+      <div class="menu-cat-hdr" onclick="toggleCat('catModels')">
+        <span class="mcat-title"><i class="fas fa-car"></i> Models</span>
+        <i class="fas fa-chevron-down mcat-arrow"></i>
+      </div>
+      <div class="menu-items" id="menuModelsList"></div>
+    </div>
+    <div class="menu-cat" id="catServices">
+      <div class="menu-cat-hdr" onclick="toggleCat('catServices')">
+        <span class="mcat-title"><i class="fas fa-concierge-bell"></i> Services</span>
+        <i class="fas fa-chevron-down mcat-arrow"></i>
+      </div>
+      <div class="menu-items">
+        <div class="mitem"><i class="fas fa-hand-holding-usd"></i> Financial Services</div>
+        <div class="mitem"><i class="fas fa-shield-alt"></i> Extended Warranty</div>
+        <div class="mitem"><i class="fas fa-flag-checkered"></i> Driving Programs</div>
+        <div class="mitem"><i class="fas fa-gem"></i> Concierge Lounge</div>
+        <div class="mitem"><i class="fas fa-glass-cheers"></i> Private Events</div>
+      </div>
+    </div>
+    <div class="menu-cat" id="catCompany">
+      <div class="menu-cat-hdr" onclick="toggleCat('catCompany')">
+        <span class="mcat-title"><i class="fas fa-building"></i> Company</span>
+        <i class="fas fa-chevron-down mcat-arrow"></i>
+      </div>
+      <div class="menu-items">
+        <div class="mitem"><i class="fas fa-info-circle"></i> About LM Autos</div>
+        <div class="mitem"><i class="fas fa-trophy"></i> Motorsport</div>
+        <div class="mitem"><i class="fas fa-landmark"></i> Museum & Heritage</div>
+        <div class="mitem"><i class="fas fa-newspaper"></i> News & Events</div>
+        <div class="mitem"><i class="fas fa-leaf"></i> Sustainability</div>
+      </div>
+    </div>
+    <div class="menu-cat" id="catBeyond">
+      <div class="menu-cat-hdr" onclick="toggleCat('catBeyond')">
+        <span class="mcat-title"><i class="fas fa-star"></i> Beyond</span>
+        <i class="fas fa-chevron-down mcat-arrow"></i>
+      </div>
+      <div class="menu-items">
+        <div class="mitem" onclick="document.getElementById('merchSection').scrollIntoView({behavior:'smooth'});closeMenu();"><i class="fas fa-tshirt"></i> LM Lifestyle & Merch</div>
+        <div class="mitem"><i class="fas fa-shopping-bag"></i> Official Merchandise</div>
+        <div class="mitem"><i class="fas fa-users"></i> Club Members</div>
+        <div class="mitem"><i class="fas fa-road"></i> Track Days</div>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<main>
+<!-- HERO -->
+<section class="hero">
+  <div>
+    <div class="hero-eyebrow">Luxury Supercar Dealership · Valledupar, Colombia · Since 2026</div>
+    <h1 class="hero-title">DRIVEN<br>BY DREAMS</h1>
+    <p class="hero-sub">Beyond the Standard. Beyond the Expected.</p>
+    <button class="hero-btn" onclick="document.getElementById('modelsSection').scrollIntoView({behavior:'smooth'})">
+      EXPLORE MODELS <i class="fas fa-arrow-right"></i>
+    </button>
+  </div>
+  <div class="hero-stats">
+    <div class="text-center"><div class="hstat-val">7</div><div class="hstat-lbl">Models</div></div>
+    <div class="text-center"><div class="hstat-val">1500</div><div class="hstat-lbl">Max HP</div></div>
+    <div class="text-center"><div class="hstat-val">2.4s</div><div class="hstat-lbl">0–100 km/h</div></div>
+    <div class="text-center"><div class="hstat-val">420</div><div class="hstat-lbl">Top km/h</div></div>
+  </div>
+</section>
+
+<!-- MODELS -->
+<section class="section" id="modelsSection">
+  <div class="sec-hdr">
+    <div class="sec-lbl">Our Fleet</div>
+    <h2 class="sec-title">THE LINEUP</h2>
+    <div class="sec-line"></div>
+  </div>
+  <div class="models-grid" id="modelsGrid"></div>
+</section>
+
+<!-- SERVICES SECTION - ENGLISH -->
+<section class="section info-section" id="servicesSection">
+  <div class="sec-hdr">
+    <div class="sec-lbl">What We Offer</div>
+    <h2 class="sec-title">SERVICES</h2>
+    <div class="sec-line"></div>
+  </div>
+  <div class="info-grid">
+    <div class="info-card">
+      <div class="info-card-icon"><i class="fas fa-hand-holding-usd"></i></div>
+      <div class="info-card-title">Financial Services</div>
+      <div class="info-card-desc">Tailor-made financing with preferential rates for ultra-high-net-worth individuals. Approval within 48 hours. Operating and financial leasing in COP and USD. Partnerships with private banks: Bancolombia Private, BBVA, Santander. Zero down payment options available (subject to credit approval).</div>
+    </div>
+    <div class="info-card">
+      <div class="info-card-icon"><i class="fas fa-shield-alt"></i></div>
+      <div class="info-card-title">Extended Warranty</div>
+      <div class="info-card-desc">Extended warranty up to 5 years or 100,000 km. Full coverage: engine, transmission, suspension, electronics and exhaust system. 24/7 assistance nationwide. Genuine factory parts guaranteed. Free flatbed towing service. Annual diagnostic at no cost.</div>
+    </div>
+    <div class="info-card">
+      <div class="info-card-icon"><i class="fas fa-flag-checkered"></i></div>
+      <div class="info-card-title">Driving Programs</div>
+      <div class="info-card-desc">Exclusive driving experiences at Autódromo de Tocancipá and private tracks. FIA certified instructors. Closed circuits, high-speed handling, emergency braking and controlled drifting. Personalized sessions for supercar owners and corporate groups.</div>
+    </div>
+    <div class="info-card">
+      <div class="info-card-icon"><i class="fas fa-gem"></i></div>
+      <div class="info-card-title">Concierge Lounge</div>
+      <div class="info-card-desc">Private lounge with personalized attention, champagne, caviar and specialty coffee tasting. Vehicle customization consulting (Ad Personam). Document management, registration and insurance processing. Valet parking and key delivery in ceremony room.</div>
+    </div>
+    <div class="info-card">
+      <div class="info-card-icon"><i class="fas fa-glass-cheers"></i></div>
+      <div class="info-card-title">Private Events</div>
+      <div class="info-card-desc">Invitation-only exclusive events: model launches, private exhibitions, gala dinners and VIP track days. Priority access to limited editions and pre-sales. Networking with collectors, celebrities and professional drivers.</div>
+    </div>
+    <div class="info-card">
+      <div class="info-card-icon"><i class="fas fa-flower"></i></div>
+      <div class="info-card-title">🌸 Flower Decoration</div>
+      <div class="info-card-desc">Make your delivery an unforgettable moment with our luxury floral arrangements. From romantic bouquets with Ecuadorian roses to imperial arches with hundreds of natural flowers. Options available: bouquets, cabin decoration, and LED surprises.</div>
+    </div>
+  </div>
+</section>
+
+<!-- COMPANY SECTION - ENGLISH -->
+<section class="section" id="companySection">
+  <div class="sec-hdr">
+    <div class="sec-lbl">Valledupar, Colombia</div>
+    <h2 class="sec-title">ABOUT LM AUTOS</h2>
+    <div class="sec-line"></div>
+  </div>
+  <div class="info-grid">
+    <div class="info-card">
+      <div class="info-card-icon"><i class="fas fa-trophy"></i></div>
+      <div class="info-card-title">Motorsport</div>
+      <div class="info-card-desc">LM Autos is an official partner of motorsport events across Latin America: Formula 1 Mexico, 6 Hours of São Paulo, and TC2000 Argentina. We sponsor local and national talent in GT categories. We organize pace car experiences at international circuits.</div>
+    </div>
+    <div class="info-card">
+      <div class="info-card-icon"><i class="fas fa-landmark"></i></div>
+      <div class="info-card-title">Museum & Heritage</div>
+      <div class="info-card-desc">Our private showroom in Valledupar doubles as a museum of automotive excellence. We showcase icons from the past (Lamborghini Miura, Countach, Diablo) alongside contemporary hypercars. Guided tours available by appointment.</div>
+    </div>
+    <div class="info-card">
+      <div class="info-card-icon"><i class="fas fa-newspaper"></i></div>
+      <div class="info-card-title">News & Events</div>
+      <div class="info-card-desc">Stay informed about global launches, limited editions and exclusive calls. Annual events calendar: exhibitions at luxury shopping malls, charity galas and elegance concours. Subscribe to our premium newsletter.</div>
+    </div>
+    <div class="info-card">
+      <div class="info-card-icon"><i class="fas fa-leaf"></i></div>
+      <div class="info-card-title">Sustainability</div>
+      <div class="info-card-desc">Committed to a sustainable future: we invest in hybrid and electric supercars (Revuelto, Temerario). Carbon footprint offset programs per kilometer driven. Solar-powered offices with LEED certification. Partners with Rewilding Colombia.</div>
+    </div>
+    <div class="info-card">
+      <div class="info-card-icon"><i class="fas fa-info-circle"></i></div>
+      <div class="info-card-title">About LM Autos</div>
+      <div class="info-card-desc">Founded in 2026 in Valledupar, LM Autos was born to revolutionize luxury car sales in Colombia. Our team has over 30 years of combined experience with brands like Lamborghini, Ferrari, McLaren and Porsche. Over 50 satisfied customers in our first year.</div>
+    </div>
+    <div class="info-card">
+      <div class="info-card-icon"><i class="fas fa-users"></i></div>
+      <div class="info-card-title">Club Members</div>
+      <div class="info-card-desc">Access to the LM Autos owners club: private events, maintenance discounts, invitations to global launches and guided driving tours across Europe and the United States. An exclusive circle for the most passionate.</div>
+    </div>
+  </div>
+</section>
+
+<!-- MERCH SECTION WITH NEW IMAGES -->
+<section class="section" id="merchSection">
+  <div class="sec-hdr">
+    <div class="sec-lbl">Official Collection</div>
+    <h2 class="sec-title">LM LIFESTYLE</h2>
+    <div class="sec-line"></div>
+  </div>
+  <div class="merch-grid" id="merchGrid"></div>
+</section>
+
+<!-- ADMIN PANEL -->
+<div id="adminPanel">
+  <div class="adm-header">
+    <h2 class="adm-title"><i class="fas fa-chart-line"></i> Admin Dashboard</h2>
+    <div class="adm-actions">
+      <button class="btn-excel" onclick="exportExcel()"><i class="fas fa-file-excel"></i> Export Excel</button>
+      <button class="btn-logout" onclick="logoutAdmin()"><i class="fas fa-sign-out-alt"></i> Logout</button>
+    </div>
+  </div>
+  
+  <div class="adm-tabs">
+    <button class="adm-tab active" onclick="switchAdmTab('stats',this)"><i class="fas fa-chart-bar"></i> Dashboard</button>
+    <button class="adm-tab" onclick="switchAdmTab('kpis',this)"><i class="fas fa-tachometer-alt"></i> KPIs</button>
+    <button class="adm-tab" onclick="switchAdmTab('invoices',this)"><i class="fas fa-file-invoice"></i> Invoices</button>
+    <button class="adm-tab" onclick="switchAdmTab('inventory',this)"><i class="fas fa-car"></i> Inventory</button>
+    <button class="adm-tab" onclick="switchAdmTab('products',this)"><i class="fas fa-tshirt"></i> Products</button>
+  </div>
+  
+  <!-- STATS TAB -->
+  <div id="admStats" class="adm-content active">
+    <div class="stats-row" id="statsRow"></div>
+    <div class="charts-row">
+      <div class="chart-box">
+        <div class="chart-box-title"><i class="fas fa-calendar-alt"></i> Sales by Month</div>
+        <div class="chart-container"><canvas id="chartMonthly"></canvas></div>
+      </div>
+      <div class="chart-box">
+        <div class="chart-box-title"><i class="fas fa-chart-pie"></i> Revenue by Model</div>
+        <div class="chart-container"><canvas id="chartModels"></canvas></div>
+      </div>
+    </div>
+    <div class="charts-row">
+      <div class="chart-box">
+        <div class="chart-box-title"><i class="fas fa-chart-line"></i> 5-Year Growth Projection</div>
+        <div class="chart-container"><canvas id="chartProjection"></canvas></div>
+      </div>
+      <div class="chart-box">
+        <div class="chart-box-title"><i class="fas fa-percentage"></i> ROI by Model</div>
+        <div class="chart-container"><canvas id="chartROI"></canvas></div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- KPIs TAB -->
+  <div id="admKpis" class="adm-content">
+    <div class="kpi-row" id="kpiRow"></div>
+  </div>
+  
+  <!-- INVOICES TAB -->
+  <div id="admInvoices" class="adm-content">
+    <div class="tbl-wrap">
+      <div class="tbl-toolbar">
+        <span class="tbl-toolbar-title"><i class="fas fa-file-invoice"></i> All Invoices</span>
+        <input class="tbl-search" id="invSearch" placeholder="Search by buyer…" oninput="filterInvoices()">
+      </div>
+      <table>
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>Model</th>
+            <th>Buyer</th>
+            <th>Decoration</th>
+            <th>Payment</th>
+            <th>Total</th>
+            <th>Actions</th>
+           </tr>
+        </thead>
+        <tbody id="invBody"></tbody>
+      </table>
+    </div>
+  </div>
+  
+  <!-- INVENTORY TAB -->
+  <div id="admInventory" class="adm-content">
+    <div style="display:flex; justify-content:flex-end; margin-bottom:1rem;">
+      <button class="btn-primary" onclick="openCarForm()"><i class="fas fa-plus"></i> Add Vehicle</button>
+    </div>
+    <div class="tbl-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Photo</th>
+            <th>Name</th>
+            <th>Price</th>
+            <th>Cost</th>
+            <th>HP</th>
+            <th>0-100</th>
+            <th>Top Speed</th>
+            <th>Year</th>
+            <th>Status</th>
+            <th>Actions</th>
+           </tr>
+        </thead>
+        <tbody id="invTable"></tbody>
+      </table>
+    </div>
+  </div>
+  
+  <!-- PRODUCTS TAB -->
+  <div id="admProducts" class="adm-content">
+    <div style="display:flex; justify-content:flex-end; margin-bottom:1rem;">
+      <button class="btn-primary" onclick="openProductForm()"><i class="fas fa-plus"></i> Add Product</button>
+    </div>
+    <div class="tbl-wrap">
+      <table style="width:100%;">
+        <thead>
+          <tr>
+            <th style="color:var(--gold); padding:12px; text-align:left;">Name</th>
+            <th style="color:var(--gold); padding:12px; text-align:left;">Price</th>
+            <th style="color:var(--gold); padding:12px; text-align:left;">Cost</th>
+            <th style="color:var(--gold); padding:12px; text-align:left;">Stock</th>
+            <th style="color:var(--gold); padding:12px; text-align:left;">Actions</th>
+           </tr>
+        </thead>
+        <tbody id="prodTable"></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-grid">
+    <div><div class="footer-brand">LM AUTOS</div><p class="footer-desc">The most exclusive luxury supercar dealership in Colombia. Where your dream car becomes reality.</p><div class="footer-socials"><div class="fsoc"><i class="fab fa-instagram"></i></div><div class="fsoc"><i class="fab fa-youtube"></i></div><div class="fsoc"><i class="fab fa-tiktok"></i></div><div class="fsoc"><i class="fab fa-whatsapp"></i></div></div></div>
+    <div><div class="fcol-title">Models</div><a class="flink"><i class="fas fa-car"></i> Lamborghini Urus</a><a class="flink"><i class="fas fa-car"></i> Lamborghini Revuelto</a><a class="flink"><i class="fas fa-car"></i> McLaren 720S</a><a class="flink"><i class="fas fa-car"></i> Porsche 911 GT3 RS</a><a class="flink"><i class="fas fa-car"></i> Bugatti Chiron</a></div>
+    <div><div class="fcol-title">Services</div><a class="flink"><i class="fas fa-hand-holding-usd"></i> Financing</a><a class="flink"><i class="fas fa-shield-alt"></i> Warranty</a><a class="flink"><i class="fas fa-gem"></i> Concierge</a><a class="flink"><i class="fas fa-road"></i> Track Days</a><a class="flink"><i class="fas fa-flower"></i> Flowers</a></div>
+    <div><div class="fcol-title">Contact</div><a class="flink"><i class="fas fa-map-marker-alt"></i> Valledupar, Cesar, Colombia</a><a class="flink"><i class="fas fa-phone"></i> +57 301 631 1381</a><a class="flink"><i class="fas fa-envelope"></i> lmautos@gmail.com</a><a class="flink"><i class="fas fa-clock"></i> Mon–Sat 9AM–7PM</a><a class="flink"><i class="fab fa-whatsapp"></i> WhatsApp 3016311381</a></div>
+  </div>
+  <div class="footer-bottom"><span class="footer-copy">© 2026 LM AUTOS — ALL RIGHTS RESERVED — VALLEDUPAR, COLOMBIA</span><span class="footer-copy">LEGAL | PRIVACY | TERMS</span></div>
+</footer>
+
+<button class="chat-fab" onclick="toggleChat()"><i class="fas fa-comment-dots"></i><span class="chat-badge-dot" id="chatBadge">1</span></button>
+<div id="chatBox"><div class="chat-top"><div style="display:flex;align-items:center;gap:.7rem;"><div class="chat-av">🏎️</div><div><div style="font-size:.88rem;font-weight:700;">LM Autos Support</div><div style="font-size:.68rem;opacity:.8;">● Online · Valledupar</div></div></div><button class="chat-close-btn" onclick="toggleChat()"><i class="fas fa-times"></i></button></div><div class="chat-msgs" id="chatMsgs"><div class="msg-bot">👋 Welcome to LM Autos! I'm your sales assistant. Which model are you interested in?</div></div><div class="chat-input-row"><input class="chat-txt" id="chatInput" placeholder="Type your message…" onkeydown="if(event.key==='Enter')sendMsg()"><button class="chat-send-btn" onclick="sendMsg()"><i class="fas fa-paper-plane" style="color:#000;font-size:.75rem;"></i></button></div></div>
+
+<div id="authModal"><div class="auth-wrap"><div class="auth-title"><i class="fas fa-user-shield"></i> ACCESS</div><div class="auth-tabs-row"><button class="auth-tab active" onclick="switchAuthTab('login',this)"><i class="fas fa-sign-in-alt"></i> Login</button><button class="auth-tab" onclick="switchAuthTab('register',this)"><i class="fas fa-user-plus"></i> Register</button></div><div id="loginForm"><input class="auth-input" id="authUser" placeholder="Username" type="text"><input class="auth-input" id="authPass" placeholder="Password" type="password" onkeydown="if(event.key==='Enter')doLogin()"><button class="btn-auth" onclick="doLogin()"><i class="fas fa-unlock"></i> ACCESS ADMIN PANEL</button></div><div id="registerForm" style="display:none;"><input class="auth-input" placeholder="Full Name" type="text"><input class="auth-input" placeholder="Email" type="email"><input class="auth-input" placeholder="Password" type="password"><button class="btn-auth" onclick="doRegister()"><i class="fas fa-user-plus"></i> CREATE ACCOUNT</button></div><div class="auth-hint">Demo: admin / admin123</div><button class="btn-auth-cancel" onclick="closeAuth()"><i class="fas fa-times"></i> Cancel</button></div></div>
+
+<div id="purchaseModal"><div class="purch-wrap"><div class="purch-top"><h2>💐 PURCHASE WITH FLOWERS</h2><button class="purch-close" onclick="closePurchase()"><i class="fas fa-times"></i></button></div><div class="purch-body"><div class="car-info-box" id="purchCarInfo"></div><label class="purch-label"><i class="fas fa-user"></i> Full Name *</label><input class="purch-input" id="buyerName" placeholder="Enter your full name" type="text"><label class="purch-label"><i class="fas fa-id-card"></i> ID / Passport *</label><input class="purch-input" id="buyerIdNum" placeholder="Document number" type="text"><label class="purch-label"><i class="fas fa-seedling"></i> Flower Decoration</label><div class="deco-grid" id="decoGrid"></div><label class="purch-label"><i class="fas fa-credit-card"></i> Payment Method</label><select class="purch-input" id="payMethod"><option>Cash</option><option>Bank Transfer</option><option>Credit Card</option><option>Cryptocurrency</option></select><div class="price-breakdown" id="priceBreak"></div><button class="btn-confirm" onclick="confirmPurchase()"><i class="fas fa-gem"></i> CONFIRM PURCHASE WITH FLOWERS</button></div></div></div>
+
+<div id="detailPage"><button class="btn-close-det" onclick="closeDetail()"><i class="fas fa-times"></i></button><div class="det-hero"><video id="detailVid" autoplay muted loop playsinline style="display:none;"></video><img id="detailImg" src="" alt="" style="display:none;"><div class="det-hero-overlay"><div><div class="det-tag" id="detTag"></div><div class="det-name" id="detName"></div><div class="det-price-disp" id="detPrice"></div></div></div></div><div class="det-body"><div class="det-specs" id="detSpecs"></div><p class="det-desc" id="detDesc"></p><div class="det-actions"><button class="btn-det-buy" onclick="openPurchaseFromDetail()">💐 PURCHASE WITH FLOWERS</button><button class="btn-det-back" onclick="closeDetail()"><i class="fas fa-arrow-left"></i> BACK</button></div></div></div>
+
+<div class="gmodal" id="carFormModal"><div class="gmodal-inner"><div class="gmodal-top"><span class="gmodal-title"><i class="fas fa-car"></i> <span id="carFormTitle">Add Vehicle</span></span><button class="gmodal-close" onclick="closeGModal('carFormModal')"><i class="fas fa-times"></i></button></div><div class="gmodal-body"><input type="hidden" id="carFormId"><div class="form-grid"><div class="form-group form-full"><label>Name</label><input class="form-control" id="cf_name" placeholder="Lamborghini Urus"></div><div class="form-group"><label>Price (COP)</label><input class="form-control" id="cf_price" placeholder="650000000" type="number"></div><div class="form-group"><label>Cost (COP)</label><input class="form-control" id="cf_cost" placeholder="580000000" type="number"></div><div class="form-group"><label>Year</label><input class="form-control" id="cf_year" placeholder="2024" type="number"></div><div class="form-group"><label>HP</label><input class="form-control" id="cf_hp" placeholder="650 HP"></div><div class="form-group"><label>0–100 km/h</label><input class="form-control" id="cf_acc" placeholder="3.6s"></div><div class="form-group"><label>Top Speed</label><input class="form-control" id="cf_top" placeholder="305 km/h"></div><div class="form-group"><label>Km</label><input class="form-control" id="cf_km" placeholder="0" type="number"></div><div class="form-group form-full"><label>Image URL</label><input class="form-control" id="cf_img" placeholder="https://..."></div><div class="form-group form-full"><label>Video URL (optional)</label><input class="form-control" id="cf_vid" placeholder="https://..."></div><div class="form-group form-full"><label>Description</label><textarea class="form-control" id="cf_desc" rows="3" placeholder="Description…"></textarea></div></div><div style="display:flex;gap:1rem;margin-top:1.5rem;"><button class="btn-primary" onclick="saveCarForm()"><i class="fas fa-save"></i> Save</button><button class="btn-secondary" onclick="closeGModal('carFormModal')"><i class="fas fa-times"></i> Cancel</button></div></div></div></div>
+
+<div class="gmodal" id="prodFormModal"><div class="gmodal-inner" style="max-width:440px;"><div class="gmodal-top"><span class="gmodal-title"><i class="fas fa-tshirt"></i> <span id="prodFormTitle">Add Product</span></span><button class="gmodal-close" onclick="closeGModal('prodFormModal')"><i class="fas fa-times"></i></button></div><div class="gmodal-body"><input type="hidden" id="pf_id"><div class="form-grid"><div class="form-group"><label>Product Name</label><input class="form-control" id="pf_name" placeholder="LM Racing Jacket"></div><div class="form-group"><label>Price (COP)</label><input class="form-control" id="pf_price" type="number" placeholder="350000"></div><div class="form-group"><label>Cost (COP)</label><input class="form-control" id="pf_cost" type="number" placeholder="200000"></div><div class="form-group"><label>Stock</label><input class="form-control" id="pf_stock" type="number" placeholder="10"></div></div><div style="display:flex;gap:1rem;margin-top:1.5rem;"><button class="btn-primary" onclick="saveProductForm()"><i class="fas fa-save"></i> Save</button><button class="btn-secondary" onclick="closeGModal('prodFormModal')"><i class="fas fa-times"></i> Cancel</button></div></div></div></div>
+
+<div class="gmodal" id="invDetailModal"><div class="gmodal-inner" style="max-width:500px;"><div class="gmodal-top"><span class="gmodal-title"><i class="fas fa-file-invoice"></i> Invoice Detail</span><button class="gmodal-close" onclick="closeGModal('invDetailModal')"><i class="fas fa-times"></i></button></div><div class="gmodal-body" id="invDetailBody"></div><div style="padding:1rem 1.8rem;display:flex;gap:.8rem;border-top:1px solid rgba(255,255,255,.06);"><button class="btn-primary" onclick="printInvoice()"><i class="fas fa-print"></i> Print</button><button class="btn-excel" onclick="downloadInvPDF()"><i class="fas fa-file-pdf"></i> PDF</button><button class="btn-secondary" onclick="closeGModal('invDetailModal')"><i class="fas fa-times"></i> Close</button></div></div></div>
+
+<div id="langModal"><div class="lang-wrap"><div class="lang-title"><i class="fas fa-globe"></i> Language</div><div class="lang-opts"><div class="lang-opt active" onclick="setLang('en',this)"><span class="flag">🇺🇸</span> English</div><div class="lang-opt" onclick="setLang('es',this)"><span class="flag">🇨🇴</span> Español</div><div class="lang-opt" onclick="setLang('fr',this)"><span class="flag">🇫🇷</span> Français</div><div class="lang-opt" onclick="setLang('de',this)"><span class="flag">🇩🇪</span> Deutsch</div></div><button class="btn-auth-cancel" onclick="document.getElementById('langModal').style.display='none'"><i class="fas fa-times"></i> Close</button></div></div>
+
+<script>
+const VIDEOS = ['https://assets.mixkit.co/videos/preview/mixkit-sports-car-driving-on-empty-road-41563-large.mp4','https://assets.mixkit.co/videos/preview/mixkit-red-sports-car-on-a-curve-47476-large.mp4','https://assets.mixkit.co/videos/preview/mixkit-super-car-driving-in-the-forest-38560-large.mp4','https://assets.mixkit.co/videos/preview/mixkit-silver-sports-car-on-the-road-47471-large.mp4','https://assets.mixkit.co/videos/preview/mixkit-sports-car-driving-fast-on-a-mountain-road-50556-large.mp4','https://assets.mixkit.co/videos/preview/mixkit-luxury-sports-car-parking-47480-large.mp4','https://assets.mixkit.co/videos/preview/mixkit-sports-car-ride-on-a-highway-50555-large.mp4'];
+
+const DEFAULT_CARS = [
+  {id:1,titulo:'Lamborghini Urus',precio:650000000,costo:580000000,año:2024,km:0,hp:'650 HP',aceleracion:'3.6s',velMax:'305 km/h',descripcion:'Luxury SUV with V8 biturbo engine producing 650 HP.',imagen:'https://i.imgur.com/dJos3B4.png',video:VIDEOS[0],vendido:false,fechaVenta:null,precioVentaReal:null},
+  {id:2,titulo:'Lamborghini Revuelto',precio:1200000000,costo:1050000000,año:2024,km:0,hp:'1015 HP',aceleracion:'2.5s',velMax:'350 km/h',descripcion:'Plug-in hybrid V12 with 1015 HP.',imagen:'https://i.imgur.com/gpPePZ2.jpeg',video:VIDEOS[1],vendido:false,fechaVenta:null,precioVentaReal:null},
+  {id:3,titulo:'McLaren 720S',precio:850000000,costo:780000000,año:2023,km:5000,hp:'720 HP',aceleracion:'2.9s',velMax:'341 km/h',descripcion:'Supercar with V8 biturbo engine.',imagen:'https://i.imgur.com/uAUMoHm.jpeg',video:VIDEOS[2],vendido:false,fechaVenta:null,precioVentaReal:null},
+  {id:4,titulo:'Porsche 911 GT3 RS',precio:550000000,costo:490000000,año:2024,km:0,hp:'525 HP',aceleracion:'3.2s',velMax:'296 km/h',descripcion:'4.0L naturally aspirated flat-6 with 525 HP.',imagen:'https://i.imgur.com/yVCla9H.png',video:VIDEOS[3],vendido:false,fechaVenta:null,precioVentaReal:null},
+  {id:5,titulo:'BMW M4 Competition',precio:320000000,costo:280000000,año:2024,km:0,hp:'510 HP',aceleracion:'3.9s',velMax:'290 km/h',descripcion:'German sports car with 510 HP.',imagen:'https://i.imgur.com/QQq5QwQ.png',video:VIDEOS[4],vendido:false,fechaVenta:null,precioVentaReal:null},
+  {id:6,titulo:'Bugatti Chiron',precio:3500000000,costo:3000000000,año:2022,km:2000,hp:'1500 HP',aceleracion:'2.4s',velMax:'420 km/h',descripcion:'W16 engine with 1500 HP.',imagen:'https://i.imgur.com/w9kH5jO.jpeg',video:VIDEOS[5],vendido:false,fechaVenta:null,precioVentaReal:null},
+  {id:7,titulo:'Bugatti Veyron',precio:1800000000,costo:1600000000,año:2018,km:8000,hp:'1001 HP',aceleracion:'2.5s',velMax:'407 km/h',descripcion:'Modern classic hypercar.',imagen:'https://i.imgur.com/nOfzOAM.jpeg',video:VIDEOS[6],vendido:false,fechaVenta:null,precioVentaReal:null}
+];
+
+const DECOS = [{id:'none',label:'No Decoration',price:0,icon:'🚗'},{id:'romantic',label:'🌹 Romantic Flower Bouquet',price:150000,icon:'🌹'},{id:'premium',label:'✨ Premium Celebration (Flowers + Balloons + Champagne)',price:450000,icon:'✨'},{id:'imperial',label:'👑 Imperial Luxury (Floral Arch + Roses + LED Sign)',price:750000,icon:'👑'}];
+
+const MERCH_ITEMS = [
+  {name:'LM Racing Jacket',price:850000,image:'https://i.imgur.com/tHIq3XL.jpeg',desc:'Premium leather racing jacket with gold LM logo'},
+  {name:'LM Carbon Cap',price:180000,image:'https://i.imgur.com/B3lQ233.png',desc:'Carbon-fiber inspired cap — limited edition'},
+  {name:'LM Gold Hoodie',price:420000,image:'https://i.imgur.com/8UJVvNX.png',desc:'Heavyweight cotton hoodie with gold embroidery'},
+  {name:'LM Supercar Tee',price:135000,image:'https://i.imgur.com/c5Zco3R.png',desc:'100% cotton tee with custom supercar artwork'},
+  {name:'LM Scale Model Set',price:1200000,image:'https://i.imgur.com/oxGHnB6.png',desc:'1:18 scale die-cast set — all 7 models'},
+  {name:'LM Polo Shirt',price:280000,image:'https://i.imgur.com/kKHl8U4.png',desc:'Breathable polo with subtle gold LM branding'},
+  {name:'LM Leather Wallet',price:320000,image:'https://i.imgur.com/fPyuN6R.png',desc:'Italian leather wallet with gold carbon detail'},
+  {name:'LM Keychain Set',price:95000,image:'https://i.imgur.com/6vC4HXr.png',desc:'Premium metal keychains — set of 3'}
+];
+
+let vehicles = JSON.parse(localStorage.getItem('lmAutosVehiculos') || 'null') || DEFAULT_CARS;
+let invoices = JSON.parse(localStorage.getItem('lmInvoices') || '[]');
+let products = JSON.parse(localStorage.getItem('lmAutosProductos') || 'null') || [{id:1,nombre:'LM Racing Jacket',precio:850000,costo:500000,stock:5},{id:2,nombre:'LM Gold Hoodie',precio:420000,costo:200000,stock:12},{id:3,nombre:'LM Carbon Cap',precio:180000,costo:80000,stock:20},{id:4,nombre:'LM Scale Model Set',precio:1200000,costo:600000,stock:3}];
+
+let currentCar=null, selectedDeco='none', adminLoggedIn=localStorage.getItem('lmAdminSession')==='1', detailCurrentCar=null, botIdx=0, currentInvView=null, charts={};
+
+function saveVehicles(){localStorage.setItem('lmAutosVehiculos', JSON.stringify(vehicles));}
+function saveInvoices(){localStorage.setItem('lmInvoices', JSON.stringify(invoices));}
+function saveProducts(){localStorage.setItem('lmAutosProductos', JSON.stringify(products));}
+
+function renderModels(){
+  const grid=document.getElementById('modelsGrid');
+  grid.innerHTML='';
+  const menuList=document.getElementById('menuModelsList');
+  menuList.innerHTML='';
+  vehicles.forEach((m,i)=>{
+    const card=document.createElement('div');
+    card.className='mcard';
+    card.innerHTML=`${m.video?`<video autoplay muted loop playsinline><source src="${m.video}"></video>`:`<img src="${m.imagen}" alt="${m.titulo}">`}${m.vendido?'<div class="sold-badge">SOLD</div>':''}<div class="mcard-overlay"><div class="mcard-tag">${m.año} · ${m.km.toLocaleString()} km</div><div class="mcard-name">${m.titulo}</div><div class="mcard-price">COP $${m.precio.toLocaleString()}</div><div class="mcard-specs"><div><div class="mspec-val">${m.hp}</div><div class="mspec-lbl">Power</div></div><div><div class="mspec-val">${m.aceleracion}</div><div class="mspec-lbl">0-100</div></div><div><div class="mspec-val">${m.velMax}</div><div class="mspec-lbl">Top Speed</div></div></div><div class="mcard-btns"><button class="btn-exp" onclick="event.stopPropagation();openDetail(vehicles[${i}])">EXPLORE</button>${!m.vendido?`<button class="btn-bw" onclick="event.stopPropagation();openPurchase(vehicles[${i}])">💐 BUY</button>`:''}</div></div>`;
+    card.onclick=()=>openDetail(m);
+    grid.appendChild(card);
+    const a=document.createElement('div');
+    a.className='mitem';
+    a.innerHTML=`<i class="fas fa-car"></i> ${m.titulo}`;
+    a.onclick=()=>{closeMenu();openDetail(m);};
+    menuList.appendChild(a);
+  });
+}
+
+function renderMerch(){
+  document.getElementById('merchGrid').innerHTML=MERCH_ITEMS.map(item=>`<div class="merch-card"><img src="${item.image}" class="merch-img" onerror="this.src='https://placehold.co/400x300/1a1a1a/ffd700?text=${encodeURIComponent(item.name)}'"><div class="merch-body"><div class="merch-name">${item.name}</div><div class="merch-price">COP $${item.price.toLocaleString()}</div><p style="font-size:.75rem;color:rgba(255,255,255,.4);margin-bottom:.9rem;">${item.desc}</p><button class="merch-btn" onclick="showToast('Added: ${item.name}')">ADD TO CART</button></div></div>`).join('');
+}
+
+function openDetail(m){
+  detailCurrentCar=m;
+  document.getElementById('detTag').textContent=`${m.año} · ${m.km.toLocaleString()} km · ${m.hp}`;
+  document.getElementById('detName').textContent=m.titulo;
+  document.getElementById('detPrice').textContent=`COP $${m.precio.toLocaleString()}`;
+  const vid=document.getElementById('detailVid'),img=document.getElementById('detailImg');
+  if(m.video){vid.style.display='block';img.style.display='none';vid.src=m.video;vid.load();vid.play();}
+  else{img.style.display='block';vid.style.display='none';img.src=m.imagen;}
+  document.getElementById('detDesc').textContent=m.descripcion;
+  document.getElementById('detSpecs').innerHTML=`<div class="det-spec"><div class="det-spec-val">${m.hp}</div><div class="det-spec-lbl">Horsepower</div></div><div class="det-spec"><div class="det-spec-val">${m.aceleracion}</div><div class="det-spec-lbl">0–100 km/h</div></div><div class="det-spec"><div class="det-spec-val">${m.velMax}</div><div class="det-spec-lbl">Top Speed</div></div><div class="det-spec"><div class="det-spec-val">${m.año}</div><div class="det-spec-lbl">Year</div></div><div class="det-spec"><div class="det-spec-val">${m.km.toLocaleString()}</div><div class="det-spec-lbl">Kilometers</div></div><div class="det-spec"><div class="det-spec-val">$${m.precio.toLocaleString()}</div><div class="det-spec-lbl">COP Price</div></div>`;
+  document.getElementById('detailPage').style.display='block';
+  document.body.style.overflow='hidden';
+  gsap.from('.det-body',{duration:.7,opacity:0,y:45});
+}
+function closeDetail(){document.getElementById('detailPage').style.display='none';document.body.style.overflow='';document.getElementById('detailVid').pause();}
+function openPurchaseFromDetail(){if(detailCurrentCar)openPurchase(detailCurrentCar);}
+
+function openPurchase(m){
+  currentCar=m;
+  selectedDeco='none';
+  document.getElementById('purchCarInfo').innerHTML=`<img src="${m.imagen}" onerror="this.style.display='none'"><div><h3 style="font-family:'Bebas Neue',sans-serif;font-size:1.3rem;">${m.titulo}</h3><p>${m.hp} · ${m.aceleracion} · COP $${m.precio.toLocaleString()}</p></div>`;
+  renderDecos();updateBreakdown();
+  document.getElementById('purchaseModal').style.display='flex';
+  document.body.style.overflow='hidden';
+}
+function closePurchase(){document.getElementById('purchaseModal').style.display='none';document.body.style.overflow='';document.getElementById('buyerName').value='';document.getElementById('buyerIdNum').value='';}
+function renderDecos(){document.getElementById('decoGrid').innerHTML=DECOS.map(d=>`<div class="deco-opt ${d.id===selectedDeco?'selected':''}" onclick="selectDeco('${d.id}')"><span class="deco-name">${d.label}</span><span class="deco-price">${d.price?'COP $'+d.price.toLocaleString():'Free'}</span></div>`).join('');}
+function selectDeco(id){selectedDeco=id;renderDecos();updateBreakdown();}
+function updateBreakdown(){const d=DECOS.find(x=>x.id===selectedDeco);const total=currentCar.precio+d.price;document.getElementById('priceBreak').innerHTML=`<div class="price-row"><span>🚗 ${currentCar.titulo}</span><span>COP $${currentCar.precio.toLocaleString()}</span></div><div class="price-row"><span>${d.icon} ${d.label}</span><span>${d.price?'COP $'+d.price.toLocaleString():'Free'}</span></div><div class="price-row"><span><i class="fas fa-receipt"></i> TOTAL</span><span>COP $${total.toLocaleString()}</span></div>`;}
+function confirmPurchase(){
+  const name=document.getElementById('buyerName').value.trim(),idNum=document.getElementById('buyerIdNum').value.trim();
+  if(!name||!idNum){showToast('Please fill all fields');return;}
+  const d=DECOS.find(x=>x.id===selectedDeco);
+  invoices.unshift({id:Date.now(),fecha:new Date().toLocaleString(),modelo:currentCar.titulo,comprador:name,identificacion:idNum,precioAuto:currentCar.precio,decoracion:d.label,precioDecoracion:d.price,total:currentCar.precio+d.price,metodoPago:document.getElementById('payMethod').value});
+  saveInvoices();closePurchase();if(adminLoggedIn)renderAdminData();showToast(`✅ Purchase confirmed! COP $${(currentCar.precio+d.price).toLocaleString()}`);
+}
+
+function openAuth(){document.getElementById('authModal').style.display='flex';}
+function closeAuth(){document.getElementById('authModal').style.display='none';}
+function switchAuthTab(tab,el){document.querySelectorAll('.auth-tab').forEach(b=>b.classList.remove('active'));el.classList.add('active');document.getElementById('loginForm').style.display=tab==='login'?'block':'none';document.getElementById('registerForm').style.display=tab==='register'?'block':'none';}
+function doLogin(){const u=document.getElementById('authUser').value,p=document.getElementById('authPass').value;if(u==='admin'&&p==='admin123'){adminLoggedIn=true;localStorage.setItem('lmAdminSession','1');closeAuth();document.getElementById('adminPanel').style.display='block';renderAdminData();gsap.from('#adminPanel',{duration:.8,opacity:0,y:40});showToast('✅ Welcome, Admin');}else{showToast('❌ Invalid credentials — admin / admin123');}}
+function doRegister(){showToast('Registered (demo). Use admin/admin123');closeAuth();}
+function logoutAdmin(){adminLoggedIn=false;localStorage.removeItem('lmAdminSession');document.getElementById('adminPanel').style.display='none';showToast('Logged out');}
+
+function switchAdmTab(tab,el){document.querySelectorAll('.adm-tab').forEach(b=>b.classList.remove('active'));document.querySelectorAll('.adm-content').forEach(c=>c.classList.remove('active'));el.classList.add('active');document.getElementById('adm'+tab.charAt(0).toUpperCase()+tab.slice(1)).classList.add('active');}
+
+function renderAdminData(){
+  const totalSales=invoices.length,revenue=invoices.reduce((s,i)=>s+i.total,0),decoRevenue=invoices.reduce((s,i)=>s+i.precioDecoracion,0),decoSales=invoices.filter(i=>i.precioDecoracion>0).length,soldCars=vehicles.filter(v=>v.vendido),costosSold=soldCars.reduce((s,v)=>s+(v.precioVentaReal?v.costo:0),0),ganancia=revenue-costosSold,margen=revenue>0?((ganancia/revenue)*100).toFixed(1):0,available=vehicles.filter(v=>!v.vendido).length;
+  document.getElementById('statsRow').innerHTML=`<div class="stat-box"><div class="stat-box-icon"><i class="fas fa-shopping-cart"></i></div><div class="stat-box-val">${totalSales}</div><div class="stat-box-lbl">Sales</div></div><div class="stat-box"><div class="stat-box-icon"><i class="fas fa-dollar-sign"></i></div><div class="stat-box-val">$${(revenue/1e9).toFixed(2)}B</div><div class="stat-box-lbl">Revenue</div></div><div class="stat-box"><div class="stat-box-icon"><i class="fas fa-chart-line"></i></div><div class="stat-box-val">$${(ganancia/1e6).toFixed(0)}M</div><div class="stat-box-lbl">Profit</div></div><div class="stat-box"><div class="stat-box-icon"><i class="fas fa-percentage"></i></div><div class="stat-box-val">${margen}%</div><div class="stat-box-lbl">Margin</div></div><div class="stat-box"><div class="stat-box-icon"><i class="fas fa-car"></i></div><div class="stat-box-val">${available}</div><div class="stat-box-lbl">Available</div></div><div class="stat-box"><div class="stat-box-icon"><i class="fas fa-seedling"></i></div><div class="stat-box-val">${decoSales}</div><div class="stat-box-lbl">Flower Orders</div></div><div class="stat-box"><div class="stat-box-icon"><i class="fas fa-flower"></i></div><div class="stat-box-val">$${(decoRevenue/1e6).toFixed(1)}M</div><div class="stat-box-lbl">Flower Revenue</div></div>`;
+  gsap.from('.stat-box',{duration:.5,scale:0,stagger:.08,ease:'back.out(1.7)'});
+  const months=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];let monthlyData=new Array(12).fill(0);
+  invoices.forEach(inv=>{const d=new Date(inv.id);monthlyData[d.getMonth()]+=inv.total/1e6;});
+  if(invoices.length===0)[2,4,3,5,7,6,9,8,11,10,13,15].forEach((v,i)=>monthlyData[i]=v);
+  if(charts.monthly)charts.monthly.destroy();charts.monthly=new Chart(document.getElementById('chartMonthly').getContext('2d'),{type:'bar',data:{labels:months,datasets:[{label:'Revenue (M COP)',data:monthlyData,backgroundColor:'rgba(255,215,0,.15)',borderColor:'#ffd700',borderWidth:2}]},options:{responsive:true,maintainAspectRatio:false}});
+  const modelLabels=vehicles.map(v=>v.titulo.split(' ').slice(-1)[0]),modelRevs=vehicles.map(v=>{const s=invoices.filter(i=>i.modelo===v.titulo);return s.length?s.reduce((a,b)=>a+b.total,0)/1e6:Math.random()*500+100;});
+  if(charts.models)charts.models.destroy();charts.models=new Chart(document.getElementById('chartModels').getContext('2d'),{type:'doughnut',data:{labels:modelLabels,datasets:[{data:modelRevs,backgroundColor:['#ffd700','#ffaa00','#ff8800','#ff6600','#cc4400','#993300','#662200']}]},options:{responsive:true}});
+  const base=revenue/1e9||2,proj=[base,base*1.25,base*1.6,base*2.1,base*2.8,base*3.7];
+  if(charts.proj)charts.proj.destroy();charts.proj=new Chart(document.getElementById('chartProjection').getContext('2d'),{type:'line',data:{labels:['2026','2027','2028','2029','2030','2031'],datasets:[{label:'Projected Revenue (B COP)',data:proj,borderColor:'#ffd700',backgroundColor:'rgba(255,215,0,.08)',fill:true,tension:.45}]},options:{responsive:true}});
+  const roiData=vehicles.map(v=>{const s=invoices.filter(i=>i.modelo===v.titulo);const rev=s.reduce((a,b)=>a+b.precioAuto,0)||v.precio;return(((rev-v.costo)/v.costo)*100).toFixed(1);});
+  if(charts.roi)charts.roi.destroy();charts.roi=new Chart(document.getElementById('chartROI').getContext('2d'),{type:'bar',data:{labels:modelLabels,datasets:[{label:'ROI %',data:roiData,backgroundColor:'rgba(255,215,0,.18)',borderColor:'#ffd700'}]},options:{responsive:true}});
+  const avgTicket=totalSales>0?Math.round(revenue/totalSales):0,decoRatio=totalSales>0?((decoSales/totalSales)*100).toFixed(1):0,companyVal=(ganancia*8/1e9).toFixed(2);
+  document.getElementById('kpiRow').innerHTML=`<div class="kpi-card"><div class="kpi-icon">🎯</div><div class="kpi-val">${avgTicket?'$'+(avgTicket/1e6).toFixed(0)+'M':'—'}</div><div class="kpi-lbl">Avg Ticket</div></div><div class="kpi-card"><div class="kpi-icon">🌹</div><div class="kpi-val">${decoRatio}%</div><div class="kpi-lbl">Flower Rate</div></div><div class="kpi-card"><div class="kpi-icon">🏢</div><div class="kpi-val">${companyVal}B</div><div class="kpi-lbl">Valuation</div></div><div class="kpi-card"><div class="kpi-icon">💰</div><div class="kpi-val">${margen}%</div><div class="kpi-lbl">Margin</div></div><div class="kpi-card"><div class="kpi-icon">📈</div><div class="kpi-val">${ganancia>=0?'+':''}$${(ganancia/1e6).toFixed(0)}M</div><div class="kpi-lbl">Net Profit</div></div><div class="kpi-card"><div class="kpi-icon">🚗</div><div class="kpi-val">${available}/${vehicles.length}</div><div class="kpi-lbl">Available/Total</div></div><div class="kpi-card"><div class="kpi-icon">💐</div><div class="kpi-val">$${(decoRevenue/1e6).toFixed(1)}M</div><div class="kpi-lbl">Flower Revenue</div></div>`;
+  gsap.from('.kpi-card',{duration:.5,opacity:0,y:20,stagger:.07});
+  renderInvoicesTable();renderInventoryTable();renderProductsTable();
+}
+
+let invFilter='';
+function filterInvoices(){invFilter=document.getElementById('invSearch').value.toLowerCase();renderInvoicesTable();}
+function renderInvoicesTable(){
+  const filtered=invFilter?invoices.filter(i=>i.comprador.toLowerCase().includes(invFilter)):invoices;
+  document.getElementById('invBody').innerHTML=filtered.length?filtered.map(inv=>`<tr><td>${inv.fecha}</td><td>${inv.modelo}</td><td>${inv.comprador}</td><td style="color:var(--gold);">${inv.decoracion}</td><td>${inv.metodoPago}</td><td style="color:var(--gold);">COP $${inv.total.toLocaleString()}</td><td><button class="btn-tbl btn-view" onclick="viewInvoice(${inv.id})"><i class="fas fa-eye"></i></button><button class="btn-tbl btn-del" onclick="delInvoice(${inv.id})"><i class="fas fa-trash"></i></button></td></tr>`).join(''):'<tr><td colspan="7" style="text-align:center;">No invoices</td></tr>';
+}
+function delInvoice(id){if(confirm('Delete?')){invoices=invoices.filter(i=>i.id!==id);saveInvoices();renderAdminData();showToast('Deleted');}}
+function viewInvoice(id){const inv=invoices.find(i=>i.id===id);if(!inv)return;currentInvView=inv;document.getElementById('invDetailBody').innerHTML=`<div class="inv-detail"><div style="text-align:center;"><div style="font-family:Bebas Neue;font-size:2rem;color:var(--gold);">LM AUTOS</div><div>INVOICE #${inv.id}</div></div><div class="inv-detail-row"><span>Date</span><span>${inv.fecha}</span></div><div class="inv-detail-row"><span>Buyer</span><span>${inv.comprador}</span></div><div class="inv-detail-row"><span>ID</span><span>${inv.identificacion}</span></div><div class="inv-detail-row"><span>Vehicle</span><span>${inv.modelo}</span></div><div class="inv-detail-row"><span>Car Price</span><span>COP $${inv.precioAuto.toLocaleString()}</span></div><div class="inv-detail-row"><span>Decoration</span><span>${inv.decoracion}</span></div><div class="inv-detail-row"><span>Decoration Price</span><span>COP $${inv.precioDecoracion.toLocaleString()}</span></div><div class="inv-detail-row"><span>Payment</span><span>${inv.metodoPago}</span></div><div class="inv-total-row"><span>TOTAL</span><span>COP $${inv.total.toLocaleString()}</span></div></div>`;document.getElementById('invDetailModal').style.display='flex';}
+function printInvoice(){if(!currentInvView)return;const w=window.open('','_blank');w.document.write(`<html><head><title>Invoice</title><style>body{font-family:sans-serif;padding:2rem;}h1{color:#b8960c;}</style></head><body><h1>LM AUTOS</h1><table><tr><th>Date</th><td>${currentInvView.fecha}</td></tr><tr><th>Buyer</th><td>${currentInvView.comprador}</td></tr><tr><th>ID</th><td>${currentInvView.identificacion}</td></tr><tr><th>Vehicle</th><td>${currentInvView.modelo}</td></tr><tr><th>Price</th><td>COP $${currentInvView.precioAuto.toLocaleString()}</td></tr><tr><th>Decoration</th><td>${currentInvView.decoracion} - COP $${currentInvView.precioDecoracion.toLocaleString()}</td></tr><tr><th>Payment</th><td>${currentInvView.metodoPago}</td></tr><tr class="total"><th>TOTAL</th><td>COP $${currentInvView.total.toLocaleString()}</td></tr></table></body></html>`);w.print();}
+function downloadInvPDF(){if(!currentInvView)return;html2pdf().from(document.getElementById('invDetailBody')).set({margin:1,filename:`Invoice_${currentInvView.id}.pdf`}).save();}
+
+function renderInventoryTable(){
+  document.getElementById('invTable').innerHTML=vehicles.map(v=>`<tr><td><img src="${v.imagen}" class="tbl-img" onerror="this.src='data:image/svg+xml,<svg><rect fill=%22%23222%22 width=%22100%22 height=%2260%22/><text fill=%22%23666%22>🚗</text></svg>'"></td><td style="font-weight:600;">${v.titulo}</td><td>COP $${v.precio.toLocaleString()}</td><td style="color:rgba(255,255,255,.45);">COP $${v.costo.toLocaleString()}</td><td style="color:var(--gold);">${v.hp}</td><td>${v.aceleracion}</td><td>${v.velMax}</td><td>${v.año}</td><td>${v.vendido?'<span class="badge-sold">SOLD</span>':'<span class="badge-ok">Available</span>'}</td><td><button class="btn-tbl btn-edit" onclick="openCarForm(${v.id})"><i class="fas fa-edit"></i></button><button class="btn-tbl btn-sell" onclick="toggleSold(${v.id})">${v.vendido?'<i class="fas fa-undo"></i>':'<i class="fas fa-check"></i>'}</button><button class="btn-tbl btn-del" onclick="deleteCar(${v.id})"><i class="fas fa-trash"></i></button></td></tr>`).join('');
+}
+function openCarForm(id){document.getElementById('carFormId').value=id||'';document.getElementById('carFormTitle').textContent=id?'Edit':'Add';if(id){const v=vehicles.find(x=>x.id===id);if(v){document.getElementById('cf_name').value=v.titulo;document.getElementById('cf_price').value=v.precio;document.getElementById('cf_cost').value=v.costo;document.getElementById('cf_year').value=v.año;document.getElementById('cf_hp').value=v.hp;document.getElementById('cf_acc').value=v.aceleracion;document.getElementById('cf_top').value=v.velMax;document.getElementById('cf_km').value=v.km;document.getElementById('cf_img').value=v.imagen;document.getElementById('cf_vid').value=v.video||'';document.getElementById('cf_desc').value=v.descripcion;}}else{['cf_name','cf_price','cf_cost','cf_year','cf_hp','cf_acc','cf_top','cf_km','cf_img','cf_vid','cf_desc'].forEach(id=>document.getElementById(id).value='');}
+  document.getElementById('carFormModal').style.display='flex';
+}
+function saveCarForm(){const id=document.getElementById('carFormId').value;const data={titulo:document.getElementById('cf_name').value.trim(),precio:+document.getElementById('cf_price').value,costo:+document.getElementById('cf_cost').value,año:+document.getElementById('cf_year').value,hp:document.getElementById('cf_hp').value.trim(),aceleracion:document.getElementById('cf_acc').value.trim(),velMax:document.getElementById('cf_top').value.trim(),km:+document.getElementById('cf_km').value,imagen:document.getElementById('cf_img').value.trim(),video:document.getElementById('cf_vid').value.trim()||null,descripcion:document.getElementById('cf_desc').value.trim()};if(!data.titulo||!data.precio){showToast('Name and price required');return;}
+  if(id){const idx=vehicles.findIndex(v=>v.id===+id);vehicles[idx]={...vehicles[idx],...data};}else{vehicles.push({...data,id:Date.now(),vendido:false,fechaVenta:null,precioVentaReal:null});}
+  saveVehicles();renderModels();renderAdminData();closeGModal('carFormModal');showToast('Vehicle saved');}
+function deleteCar(id){if(confirm('Delete?')){vehicles=vehicles.filter(v=>v.id!==id);saveVehicles();renderModels();renderAdminData();showToast('Deleted');}}
+function toggleSold(id){const v=vehicles.find(x=>x.id===id);v.vendido=!v.vendido;v.fechaVenta=v.vendido?new Date().toISOString():null;v.precioVentaReal=v.vendido?v.precio:null;saveVehicles();renderModels();renderAdminData();showToast(v.vendido?'Marked SOLD':'Reactivated');}
+
+function renderProductsTable(){
+  document.getElementById('prodTable').innerHTML=products.map(p=>`<tr><td style="font-weight:600;">${p.nombre}</td><td>COP $${p.precio.toLocaleString()}</td><td style="color:rgba(255,255,255,.45);">COP $${p.costo.toLocaleString()}</td><td>${p.stock}</td><td><button class="btn-tbl btn-edit" onclick="openProductForm(${p.id})"><i class="fas fa-edit"></i></button><button class="btn-tbl btn-del" onclick="deleteProd(${p.id})"><i class="fas fa-trash"></i></button></td></tr>`).join('');
+}
+function openProductForm(id){document.getElementById('pf_id').value=id||'';document.getElementById('prodFormTitle').textContent=id?'Edit':'Add';if(id){const p=products.find(x=>x.id===id);if(p){document.getElementById('pf_name').value=p.nombre;document.getElementById('pf_price').value=p.precio;document.getElementById('pf_cost').value=p.costo;document.getElementById('pf_stock').value=p.stock;}}else{['pf_name','pf_price','pf_cost','pf_stock'].forEach(i=>document.getElementById(i).value='');}
+  document.getElementById('prodFormModal').style.display='flex';
+}
+function saveProductForm(){const id=document.getElementById('pf_id').value;const data={nombre:document.getElementById('pf_name').value.trim(),precio:+document.getElementById('pf_price').value,costo:+document.getElementById('pf_cost').value,stock:+document.getElementById('pf_stock').value};if(!data.nombre){showToast('Name required');return;}
+  if(id){const idx=products.findIndex(p=>p.id===+id);products[idx]={...products[idx],...data};}else{products.push({...data,id:Date.now()});}
+  saveProducts();renderProductsTable();closeGModal('prodFormModal');showToast('Product saved');}
+function deleteProd(id){if(confirm('Delete?')){products=products.filter(p=>p.id!==id);saveProducts();renderProductsTable();showToast('Deleted');}}
+
+function exportExcel(){if(typeof XLSX==='undefined'){showToast('Excel not loaded');return;}const wb=XLSX.utils.book_new();XLSX.utils.book_append_sheet(wb,XLSX.utils.json_to_sheet(vehicles.filter(v=>v.vendido).map(v=>({Name:v.titulo,Price:v.precio,Year:v.año}))),'Sold');XLSX.utils.book_append_sheet(wb,XLSX.utils.json_to_sheet(invoices.map(i=>({Date:i.fecha,Model:i.modelo,Buyer:i.comprador,Total:i.total}))),'Invoices');XLSX.writeFile(wb,'LM_Autos_Report.xlsx');showToast('Excel downloaded');}
+
+const botReplies=['Our specialists are available. Which model interests you?','Flower decoration makes every delivery special.','We offer flexible financing.','Located in Valledupar, Colombia.','The Bugatti Chiron is our most exclusive model.'];
+function toggleChat(){const b=document.getElementById('chatBox');b.style.display=b.style.display==='block'?'none':'block';document.getElementById('chatBadge').style.display='none';}
+function sendMsg(){const inp=document.getElementById('chatInput'),txt=inp.value.trim();if(!txt)return;const msgs=document.getElementById('chatMsgs');msgs.innerHTML+=`<div class="msg-user">${txt}</div>`;inp.value='';msgs.scrollTop=msgs.scrollHeight;setTimeout(()=>{msgs.innerHTML+=`<div class="msg-bot">${botReplies[botIdx%botReplies.length]}</div>`;botIdx++;msgs.scrollTop=msgs.scrollHeight;},700);}
+function toggleMenu(){document.getElementById('sideMenu').classList.toggle('open');document.getElementById('overlay').classList.toggle('active');}
+function closeMenu(){document.getElementById('sideMenu').classList.remove('open');document.getElementById('overlay').classList.remove('active');}
+function toggleCat(id){document.getElementById(id).classList.toggle('open');}
+function closeGModal(id){document.getElementById(id).style.display='none';}
+function showToast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),3000);}
+function openLang(){document.getElementById('langModal').style.display='flex';}
+function setLang(lang,el){currentLang=lang;localStorage.setItem('lmLang',lang);document.querySelectorAll('.lang-opt').forEach(o=>o.classList.remove('active'));el.classList.add('active');document.getElementById('langModal').style.display='none';showToast('Language: '+lang.toUpperCase());}
+let currentLang=localStorage.getItem('lmLang')||'en';
+window.addEventListener('scroll',()=>{document.getElementById('header').classList.toggle('scrolled',window.scrollY>60);});
+document.addEventListener('mousemove',e=>{document.getElementById('cursor').style.left=e.clientX+'px';document.getElementById('cursor').style.top=e.clientY+'px';setTimeout(()=>{document.getElementById('cursorRing').style.left=e.clientX+'px';document.getElementById('cursorRing').style.top=e.clientY+'px';},80);});
+
+// Particles generator
+function createParticles() {
+  const container = document.getElementById('particles');
+  for(let i = 0; i < 50; i++) {
+    const particle = document.createElement('div');
+    particle.className = 'particle';
+    const size = Math.random() * 4 + 2;
+    particle.style.width = size + 'px';
+    particle.style.height = size + 'px';
+    particle.style.left = Math.random() * 100 + '%';
+    particle.style.bottom = Math.random() * 100 + '%';
+    particle.style.animationDelay = Math.random() * 20 + 's';
+    particle.style.animationDuration = 15 + Math.random() * 20 + 's';
+    container.appendChild(particle);
+  }
+}
+createParticles();
+
+gsap.registerPlugin(ScrollTrigger);
+setTimeout(() => {
+  gsap.from('.mcard', {duration:.65, opacity:0, y:70, stagger:.1});
+  gsap.from('.info-card', {duration:.6, opacity:0, y:40, stagger:.08});
+  gsap.from('.merch-card', {duration:.6, opacity:0, y:40, stagger:.07});
+}, 100);
+renderModels();renderMerch();if(adminLoggedIn){document.getElementById('adminPanel').style.display='block';renderAdminData();}
+
+// FIX: Verificar que el elemento prodTable existe antes de usarlo
+function renderProductsTable() {
+    const prodTable = document.getElementById('prodTable');
+    if (!prodTable) {
+        console.warn('prodTable element not found, skipping render');
+        return;
+    }
+    prodTable.innerHTML = products.map(p => `
+        <tr>
+            <td style="font-weight:600;">${p.nombre}</td>
+            <td>COP $${p.precio.toLocaleString()}</td>
+            <td style="color:rgba(255,255,255,.45);">COP $${p.costo.toLocaleString()}</td>
+            <td>${p.stock}</td>
+            <td>
+                <button class="btn-tbl btn-edit" onclick="openProductForm(${p.id})"><i class="fas fa-edit"></i></button>
+                <button class="btn-tbl btn-del" onclick="deleteProd(${p.id})"><i class="fas fa-trash"></i></button>
+            </td>
+        </tr>
+    `).join('');
+}
+</script>
+</body>
+</html>
