@@ -846,16 +846,15 @@ tbody tr:hover td{background:rgba(255,215,0,.025);}
 <div id="langModal"><div class="lang-wrap"><div class="lang-title"><i class="fas fa-globe"></i> Language</div><div class="lang-opts"><div class="lang-opt active" onclick="setLang('en',this)"><span class="flag">🇺🇸</span> English</div><div class="lang-opt" onclick="setLang('es',this)"><span class="flag">🇨🇴</span> Español</div><div class="lang-opt" onclick="setLang('fr',this)"><span class="flag">🇫🇷</span> Français</div><div class="lang-opt" onclick="setLang('de',this)"><span class="flag">🇩🇪</span> Deutsch</div></div><button class="btn-auth-cancel" onclick="document.getElementById('langModal').style.display='none'"><i class="fas fa-times"></i> Close</button></div></div>
 
 <script>
-const VIDEOS = ['https://assets.mixkit.co/videos/preview/mixkit-sports-car-driving-on-empty-road-41563-large.mp4','https://assets.mixkit.co/videos/preview/mixkit-red-sports-car-on-a-curve-47476-large.mp4','https://assets.mixkit.co/videos/preview/mixkit-super-car-driving-in-the-forest-38560-large.mp4','https://assets.mixkit.co/videos/preview/mixkit-silver-sports-car-on-the-road-47471-large.mp4','https://assets.mixkit.co/videos/preview/mixkit-sports-car-driving-fast-on-a-mountain-road-50556-large.mp4','https://assets.mixkit.co/videos/preview/mixkit-luxury-sports-car-parking-47480-large.mp4','https://assets.mixkit.co/videos/preview/mixkit-sports-car-ride-on-a-highway-50555-large.mp4'];
-
+// ===================== DATA =====================
 const DEFAULT_CARS = [
-  {id:1,titulo:'Lamborghini Urus',precio:650000000,costo:580000000,año:2024,km:0,hp:'650 HP',aceleracion:'3.6s',velMax:'305 km/h',descripcion:'Luxury SUV with V8 biturbo engine producing 650 HP.',imagen:'https://i.imgur.com/dJos3B4.png',video:VIDEOS[0],vendido:false,fechaVenta:null,precioVentaReal:null},
-  {id:2,titulo:'Lamborghini Revuelto',precio:1200000000,costo:1050000000,año:2024,km:0,hp:'1015 HP',aceleracion:'2.5s',velMax:'350 km/h',descripcion:'Plug-in hybrid V12 with 1015 HP.',imagen:'https://i.imgur.com/gpPePZ2.jpeg',video:VIDEOS[1],vendido:false,fechaVenta:null,precioVentaReal:null},
-  {id:3,titulo:'McLaren 720S',precio:850000000,costo:780000000,año:2023,km:5000,hp:'720 HP',aceleracion:'2.9s',velMax:'341 km/h',descripcion:'Supercar with V8 biturbo engine.',imagen:'https://i.imgur.com/uAUMoHm.jpeg',video:VIDEOS[2],vendido:false,fechaVenta:null,precioVentaReal:null},
-  {id:4,titulo:'Porsche 911 GT3 RS',precio:550000000,costo:490000000,año:2024,km:0,hp:'525 HP',aceleracion:'3.2s',velMax:'296 km/h',descripcion:'4.0L naturally aspirated flat-6 with 525 HP.',imagen:'https://i.imgur.com/yVCla9H.png',video:VIDEOS[3],vendido:false,fechaVenta:null,precioVentaReal:null},
-  {id:5,titulo:'BMW M4 Competition',precio:320000000,costo:280000000,año:2024,km:0,hp:'510 HP',aceleracion:'3.9s',velMax:'290 km/h',descripcion:'German sports car with 510 HP.',imagen:'https://i.imgur.com/QQq5QwQ.png',video:VIDEOS[4],vendido:false,fechaVenta:null,precioVentaReal:null},
-  {id:6,titulo:'Bugatti Chiron',precio:3500000000,costo:3000000000,año:2022,km:2000,hp:'1500 HP',aceleracion:'2.4s',velMax:'420 km/h',descripcion:'W16 engine with 1500 HP.',imagen:'https://i.imgur.com/w9kH5jO.jpeg',video:VIDEOS[5],vendido:false,fechaVenta:null,precioVentaReal:null},
-  {id:7,titulo:'Bugatti Veyron',precio:1800000000,costo:1600000000,año:2018,km:8000,hp:'1001 HP',aceleracion:'2.5s',velMax:'407 km/h',descripcion:'Modern classic hypercar.',imagen:'https://i.imgur.com/nOfzOAM.jpeg',video:VIDEOS[6],vendido:false,fechaVenta:null,precioVentaReal:null}
+  {id:1,titulo:'Lamborghini Urus',precio:650000000,costo:580000000,año:2024,km:0,hp:'650 HP',aceleracion:'3.6s',velMax:'305 km/h',descripcion:'Luxury SUV with V8 biturbo engine producing 650 HP.',imagen:'https://i.imgur.com/jqxPRq5.png',vendido:false,fechaVenta:null,precioVentaReal:null},
+  {id:2,titulo:'Lamborghini Revuelto',precio:1200000000,costo:1050000000,año:2024,km:0,hp:'1015 HP',aceleracion:'2.5s',velMax:'350 km/h',descripcion:'Plug-in hybrid V12 with 1015 HP.',imagen:'https://i.imgur.com/nZTaMAg.jpeg',vendido:false,fechaVenta:null,precioVentaReal:null},
+  {id:3,titulo:'McLaren 720S',precio:850000000,costo:780000000,año:2023,km:5000,hp:'720 HP',aceleracion:'2.9s',velMax:'341 km/h',descripcion:'Supercar with V8 biturbo engine.',imagen:'https://i.imgur.com/Hf04nY9.jpeg',vendido:false,fechaVenta:null,precioVentaReal:null},
+  {id:4,titulo:'Porsche 911 GT3 RS',precio:550000000,costo:490000000,año:2024,km:0,hp:'525 HP',aceleracion:'3.2s',velMax:'296 km/h',descripcion:'4.0L naturally aspirated flat-6 with 525 HP.',imagen:'https://i.imgur.com/o4NFS6Q.png',vendido:false,fechaVenta:null,precioVentaReal:null},
+  {id:5,titulo:'BMW M4 Competition',precio:320000000,costo:280000000,año:2024,km:0,hp:'510 HP',aceleracion:'3.9s',velMax:'290 km/h',descripcion:'German sports car with 510 HP.',imagen:'https://i.imgur.com/ulg6ifs.png',vendido:false,fechaVenta:null,precioVentaReal:null},
+  {id:6,titulo:'Bugatti Chiron',precio:3500000000,costo:3000000000,año:2022,km:2000,hp:'1500 HP',aceleracion:'2.4s',velMax:'420 km/h',descripcion:'W16 engine with 1500 HP.',imagen:'https://i.imgur.com/6y3zdtd.jpeg',vendido:false,fechaVenta:null,precioVentaReal:null},
+  {id:7,titulo:'Bugatti Veyron',precio:1800000000,costo:1600000000,año:2018,km:8000,hp:'1001 HP',aceleracion:'2.5s',velMax:'407 km/h',descripcion:'Modern classic hypercar.',imagen:'https://i.imgur.com/CglBHiV.jpeg',vendido:false,fechaVenta:null,precioVentaReal:null}
 ];
 
 const DECOS = [{id:'none',label:'No Decoration',price:0,icon:'🚗'},{id:'romantic',label:'🌹 Romantic Flower Bouquet',price:150000,icon:'🌹'},{id:'premium',label:'✨ Premium Celebration (Flowers + Balloons + Champagne)',price:450000,icon:'✨'},{id:'imperial',label:'👑 Imperial Luxury (Floral Arch + Roses + LED Sign)',price:750000,icon:'👑'}];
@@ -881,6 +880,7 @@ function saveVehicles(){localStorage.setItem('lmAutosVehiculos', JSON.stringify(
 function saveInvoices(){localStorage.setItem('lmInvoices', JSON.stringify(invoices));}
 function saveProducts(){localStorage.setItem('lmAutosProductos', JSON.stringify(products));}
 
+// RENDER MODELS - SOLO IMÁGENES (SIN VIDEOS)
 function renderModels(){
   const grid = document.getElementById('modelsGrid');
   if(!grid) return;
@@ -891,8 +891,6 @@ function renderModels(){
   vehicles.forEach((m) => {
     const card = document.createElement('div');
     card.className = 'mcard';
-    
-    // SOLO IMAGEN - SIN VIDEO
     const mediaHtml = `<img src="${m.imagen}" alt="${m.titulo}" onerror="this.src='https://placehold.co/800x500/1a1a1a/ffd700?text=LM+Autos'">`;
     
     card.innerHTML = `
@@ -913,11 +911,9 @@ function renderModels(){
         </div>
       </div>
     `;
-    
     card.onclick = () => openDetail(m);
     grid.appendChild(card);
     
-    // Menú lateral
     if(menuList) {
       const a = document.createElement('div');
       a.className = 'mitem';
@@ -927,142 +923,64 @@ function renderModels(){
     }
   });
 }
+
 function renderMerch(){
-  document.getElementById('merchGrid').innerHTML=MERCH_ITEMS.map(item=>`<div class="merch-card"><img src="${item.image}" class="merch-img" onerror="this.src='https://placehold.co/400x300/1a1a1a/ffd700?text=${encodeURIComponent(item.name)}'"><div class="merch-body"><div class="merch-name">${item.name}</div><div class="merch-price">COP $${item.price.toLocaleString()}</div><p style="font-size:.75rem;color:rgba(255,255,255,.4);margin-bottom:.9rem;">${item.desc}</p><button class="merch-btn" onclick="showToast('Added: ${item.name}')">ADD TO CART</button></div></div>`).join('');
+  document.getElementById('merchGrid').innerHTML = MERCH_ITEMS.map(item => `
+    <div class="merch-card">
+      <img src="${item.image}" class="merch-img" onerror="this.src='https://placehold.co/400x300/1a1a1a/ffd700?text=${encodeURIComponent(item.name)}'">
+      <div class="merch-body">
+        <div class="merch-name">${item.name}</div>
+        <div class="merch-price">COP $${item.price.toLocaleString()}</div>
+        <p style="font-size:.75rem;color:rgba(255,255,255,.4);margin-bottom:.9rem;">${item.desc}</p>
+        <button class="merch-btn" onclick="showToast('Added: ${item.name}')">ADD TO CART</button>
+      </div>
+    </div>
+  `).join('');
 }
 
+// OPEN DETAIL - SOLO IMÁGENES (SIN VIDEOS)
 function openDetail(m){
-  detailCurrentCar=m;
-  document.getElementById('detTag').textContent=`${m.año} · ${m.km.toLocaleString()} km · ${m.hp}`;
-  document.getElementById('detName').textContent=m.titulo;
-  document.getElementById('detPrice').textContent=`COP $${m.precio.toLocaleString()}`;
-  const vid=document.getElementById('detailVid'),img=document.getElementById('detailImg');
-  if(m.video){vid.style.display='block';img.style.display='none';vid.src=m.video;vid.load();vid.play();}
-  else{img.style.display='block';vid.style.display='none';img.src=m.imagen;}
-  document.getElementById('detDesc').textContent=m.descripcion;
-  document.getElementById('detSpecs').innerHTML=`<div class="det-spec"><div class="det-spec-val">${m.hp}</div><div class="det-spec-lbl">Horsepower</div></div><div class="det-spec"><div class="det-spec-val">${m.aceleracion}</div><div class="det-spec-lbl">0–100 km/h</div></div><div class="det-spec"><div class="det-spec-val">${m.velMax}</div><div class="det-spec-lbl">Top Speed</div></div><div class="det-spec"><div class="det-spec-val">${m.año}</div><div class="det-spec-lbl">Year</div></div><div class="det-spec"><div class="det-spec-val">${m.km.toLocaleString()}</div><div class="det-spec-lbl">Kilometers</div></div><div class="det-spec"><div class="det-spec-val">$${m.precio.toLocaleString()}</div><div class="det-spec-lbl">COP Price</div></div>`;
-  document.getElementById('detailPage').style.display='block';
-  document.body.style.overflow='hidden';
-  gsap.from('.det-body',{duration:.7,opacity:0,y:45});
-}
-function closeDetail(){document.getElementById('detailPage').style.display='none';document.body.style.overflow='';document.getElementById('detailVid').pause();}
-function openPurchaseFromDetail(){if(detailCurrentCar)openPurchase(detailCurrentCar);}
-
-function openPurchase(m){
-  currentCar=m;
-  selectedDeco='none';
-  document.getElementById('purchCarInfo').innerHTML=`<img src="${m.imagen}" onerror="this.style.display='none'"><div><h3 style="font-family:'Bebas Neue',sans-serif;font-size:1.3rem;">${m.titulo}</h3><p>${m.hp} · ${m.aceleracion} · COP $${m.precio.toLocaleString()}</p></div>`;
-  renderDecos();updateBreakdown();
-  document.getElementById('purchaseModal').style.display='flex';
-  document.body.style.overflow='hidden';
-}
-function closePurchase(){document.getElementById('purchaseModal').style.display='none';document.body.style.overflow='';document.getElementById('buyerName').value='';document.getElementById('buyerIdNum').value='';}
-function renderDecos(){document.getElementById('decoGrid').innerHTML=DECOS.map(d=>`<div class="deco-opt ${d.id===selectedDeco?'selected':''}" onclick="selectDeco('${d.id}')"><span class="deco-name">${d.label}</span><span class="deco-price">${d.price?'COP $'+d.price.toLocaleString():'Free'}</span></div>`).join('');}
-function selectDeco(id){selectedDeco=id;renderDecos();updateBreakdown();}
-function updateBreakdown(){const d=DECOS.find(x=>x.id===selectedDeco);const total=currentCar.precio+d.price;document.getElementById('priceBreak').innerHTML=`<div class="price-row"><span>🚗 ${currentCar.titulo}</span><span>COP $${currentCar.precio.toLocaleString()}</span></div><div class="price-row"><span>${d.icon} ${d.label}</span><span>${d.price?'COP $'+d.price.toLocaleString():'Free'}</span></div><div class="price-row"><span><i class="fas fa-receipt"></i> TOTAL</span><span>COP $${total.toLocaleString()}</span></div>`;}
-function confirmPurchase(){
-  const name=document.getElementById('buyerName').value.trim(),idNum=document.getElementById('buyerIdNum').value.trim();
-  if(!name||!idNum){showToast('Please fill all fields');return;}
-  const d=DECOS.find(x=>x.id===selectedDeco);
-  invoices.unshift({id:Date.now(),fecha:new Date().toLocaleString(),modelo:currentCar.titulo,comprador:name,identificacion:idNum,precioAuto:currentCar.precio,decoracion:d.label,precioDecoracion:d.price,total:currentCar.precio+d.price,metodoPago:document.getElementById('payMethod').value});
-  saveInvoices();closePurchase();if(adminLoggedIn)renderAdminData();showToast(`✅ Purchase confirmed! COP $${(currentCar.precio+d.price).toLocaleString()}`);
-}
-
-function openAuth(){document.getElementById('authModal').style.display='flex';}
-function closeAuth(){document.getElementById('authModal').style.display='none';}
-function switchAuthTab(tab,el){document.querySelectorAll('.auth-tab').forEach(b=>b.classList.remove('active'));el.classList.add('active');document.getElementById('loginForm').style.display=tab==='login'?'block':'none';document.getElementById('registerForm').style.display=tab==='register'?'block':'none';}
-function doLogin(){const u=document.getElementById('authUser').value,p=document.getElementById('authPass').value;if(u==='admin'&&p==='admin123'){adminLoggedIn=true;localStorage.setItem('lmAdminSession','1');closeAuth();document.getElementById('adminPanel').style.display='block';renderAdminData();gsap.from('#adminPanel',{duration:.8,opacity:0,y:40});showToast('✅ Welcome, Admin');}else{showToast('❌ Invalid credentials — admin / admin123');}}
-function doRegister(){showToast('Registered (demo). Use admin/admin123');closeAuth();}
-function logoutAdmin(){adminLoggedIn=false;localStorage.removeItem('lmAdminSession');document.getElementById('adminPanel').style.display='none';showToast('Logged out');}
-
-function switchAdmTab(tab,el){document.querySelectorAll('.adm-tab').forEach(b=>b.classList.remove('active'));document.querySelectorAll('.adm-content').forEach(c=>c.classList.remove('active'));el.classList.add('active');document.getElementById('adm'+tab.charAt(0).toUpperCase()+tab.slice(1)).classList.add('active');}
-
-function renderAdminData(){
-  const totalSales=invoices.length,revenue=invoices.reduce((s,i)=>s+i.total,0),decoRevenue=invoices.reduce((s,i)=>s+i.precioDecoracion,0),decoSales=invoices.filter(i=>i.precioDecoracion>0).length,soldCars=vehicles.filter(v=>v.vendido),costosSold=soldCars.reduce((s,v)=>s+(v.precioVentaReal?v.costo:0),0),ganancia=revenue-costosSold,margen=revenue>0?((ganancia/revenue)*100).toFixed(1):0,available=vehicles.filter(v=>!v.vendido).length;
-  document.getElementById('statsRow').innerHTML=`<div class="stat-box"><div class="stat-box-icon"><i class="fas fa-shopping-cart"></i></div><div class="stat-box-val">${totalSales}</div><div class="stat-box-lbl">Sales</div></div><div class="stat-box"><div class="stat-box-icon"><i class="fas fa-dollar-sign"></i></div><div class="stat-box-val">$${(revenue/1e9).toFixed(2)}B</div><div class="stat-box-lbl">Revenue</div></div><div class="stat-box"><div class="stat-box-icon"><i class="fas fa-chart-line"></i></div><div class="stat-box-val">$${(ganancia/1e6).toFixed(0)}M</div><div class="stat-box-lbl">Profit</div></div><div class="stat-box"><div class="stat-box-icon"><i class="fas fa-percentage"></i></div><div class="stat-box-val">${margen}%</div><div class="stat-box-lbl">Margin</div></div><div class="stat-box"><div class="stat-box-icon"><i class="fas fa-car"></i></div><div class="stat-box-val">${available}</div><div class="stat-box-lbl">Available</div></div><div class="stat-box"><div class="stat-box-icon"><i class="fas fa-seedling"></i></div><div class="stat-box-val">${decoSales}</div><div class="stat-box-lbl">Flower Orders</div></div><div class="stat-box"><div class="stat-box-icon"><i class="fas fa-flower"></i></div><div class="stat-box-val">$${(decoRevenue/1e6).toFixed(1)}M</div><div class="stat-box-lbl">Flower Revenue</div></div>`;
-  gsap.from('.stat-box',{duration:.5,scale:0,stagger:.08,ease:'back.out(1.7)'});
-  const months=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];let monthlyData=new Array(12).fill(0);
-  invoices.forEach(inv=>{const d=new Date(inv.id);monthlyData[d.getMonth()]+=inv.total/1e6;});
-  if(invoices.length===0)[2,4,3,5,7,6,9,8,11,10,13,15].forEach((v,i)=>monthlyData[i]=v);
-  if(charts.monthly)charts.monthly.destroy();charts.monthly=new Chart(document.getElementById('chartMonthly').getContext('2d'),{type:'bar',data:{labels:months,datasets:[{label:'Revenue (M COP)',data:monthlyData,backgroundColor:'rgba(255,215,0,.15)',borderColor:'#ffd700',borderWidth:2}]},options:{responsive:true,maintainAspectRatio:false}});
-  const modelLabels=vehicles.map(v=>v.titulo.split(' ').slice(-1)[0]),modelRevs=vehicles.map(v=>{const s=invoices.filter(i=>i.modelo===v.titulo);return s.length?s.reduce((a,b)=>a+b.total,0)/1e6:Math.random()*500+100;});
-  if(charts.models)charts.models.destroy();charts.models=new Chart(document.getElementById('chartModels').getContext('2d'),{type:'doughnut',data:{labels:modelLabels,datasets:[{data:modelRevs,backgroundColor:['#ffd700','#ffaa00','#ff8800','#ff6600','#cc4400','#993300','#662200']}]},options:{responsive:true}});
-  const base=revenue/1e9||2,proj=[base,base*1.25,base*1.6,base*2.1,base*2.8,base*3.7];
-  if(charts.proj)charts.proj.destroy();charts.proj=new Chart(document.getElementById('chartProjection').getContext('2d'),{type:'line',data:{labels:['2026','2027','2028','2029','2030','2031'],datasets:[{label:'Projected Revenue (B COP)',data:proj,borderColor:'#ffd700',backgroundColor:'rgba(255,215,0,.08)',fill:true,tension:.45}]},options:{responsive:true}});
-  const roiData=vehicles.map(v=>{const s=invoices.filter(i=>i.modelo===v.titulo);const rev=s.reduce((a,b)=>a+b.precioAuto,0)||v.precio;return(((rev-v.costo)/v.costo)*100).toFixed(1);});
-  if(charts.roi)charts.roi.destroy();charts.roi=new Chart(document.getElementById('chartROI').getContext('2d'),{type:'bar',data:{labels:modelLabels,datasets:[{label:'ROI %',data:roiData,backgroundColor:'rgba(255,215,0,.18)',borderColor:'#ffd700'}]},options:{responsive:true}});
-  const avgTicket=totalSales>0?Math.round(revenue/totalSales):0,decoRatio=totalSales>0?((decoSales/totalSales)*100).toFixed(1):0,companyVal=(ganancia*8/1e9).toFixed(2);
-  document.getElementById('kpiRow').innerHTML=`<div class="kpi-card"><div class="kpi-icon">🎯</div><div class="kpi-val">${avgTicket?'$'+(avgTicket/1e6).toFixed(0)+'M':'—'}</div><div class="kpi-lbl">Avg Ticket</div></div><div class="kpi-card"><div class="kpi-icon">🌹</div><div class="kpi-val">${decoRatio}%</div><div class="kpi-lbl">Flower Rate</div></div><div class="kpi-card"><div class="kpi-icon">🏢</div><div class="kpi-val">${companyVal}B</div><div class="kpi-lbl">Valuation</div></div><div class="kpi-card"><div class="kpi-icon">💰</div><div class="kpi-val">${margen}%</div><div class="kpi-lbl">Margin</div></div><div class="kpi-card"><div class="kpi-icon">📈</div><div class="kpi-val">${ganancia>=0?'+':''}$${(ganancia/1e6).toFixed(0)}M</div><div class="kpi-lbl">Net Profit</div></div><div class="kpi-card"><div class="kpi-icon">🚗</div><div class="kpi-val">${available}/${vehicles.length}</div><div class="kpi-lbl">Available/Total</div></div><div class="kpi-card"><div class="kpi-icon">💐</div><div class="kpi-val">$${(decoRevenue/1e6).toFixed(1)}M</div><div class="kpi-lbl">Flower Revenue</div></div>`;
-  gsap.from('.kpi-card',{duration:.5,opacity:0,y:20,stagger:.07});
-  renderInvoicesTable();renderInventoryTable();renderProductsTable();
-}
-
-let invFilter='';
-function filterInvoices(){invFilter=document.getElementById('invSearch').value.toLowerCase();renderInvoicesTable();}
-function renderInvoicesTable(){
-  const filtered=invFilter?invoices.filter(i=>i.comprador.toLowerCase().includes(invFilter)):invoices;
-  document.getElementById('invBody').innerHTML=filtered.length?filtered.map(inv=>`<tr><td>${inv.fecha}</td><td>${inv.modelo}</td><td>${inv.comprador}</td><td style="color:var(--gold);">${inv.decoracion}</td><td>${inv.metodoPago}</td><td style="color:var(--gold);">COP $${inv.total.toLocaleString()}</td><td><button class="btn-tbl btn-view" onclick="viewInvoice(${inv.id})"><i class="fas fa-eye"></i></button><button class="btn-tbl btn-del" onclick="delInvoice(${inv.id})"><i class="fas fa-trash"></i></button></td></tr>`).join(''):'<tr><td colspan="7" style="text-align:center;">No invoices</td></tr>';
-}
-function delInvoice(id){if(confirm('Delete?')){invoices=invoices.filter(i=>i.id!==id);saveInvoices();renderAdminData();showToast('Deleted');}}
-function viewInvoice(id){const inv=invoices.find(i=>i.id===id);if(!inv)return;currentInvView=inv;document.getElementById('invDetailBody').innerHTML=`<div class="inv-detail"><div style="text-align:center;"><div style="font-family:Bebas Neue;font-size:2rem;color:var(--gold);">LM AUTOS</div><div>INVOICE #${inv.id}</div></div><div class="inv-detail-row"><span>Date</span><span>${inv.fecha}</span></div><div class="inv-detail-row"><span>Buyer</span><span>${inv.comprador}</span></div><div class="inv-detail-row"><span>ID</span><span>${inv.identificacion}</span></div><div class="inv-detail-row"><span>Vehicle</span><span>${inv.modelo}</span></div><div class="inv-detail-row"><span>Car Price</span><span>COP $${inv.precioAuto.toLocaleString()}</span></div><div class="inv-detail-row"><span>Decoration</span><span>${inv.decoracion}</span></div><div class="inv-detail-row"><span>Decoration Price</span><span>COP $${inv.precioDecoracion.toLocaleString()}</span></div><div class="inv-detail-row"><span>Payment</span><span>${inv.metodoPago}</span></div><div class="inv-total-row"><span>TOTAL</span><span>COP $${inv.total.toLocaleString()}</span></div></div>`;document.getElementById('invDetailModal').style.display='flex';}
-function printInvoice(){if(!currentInvView)return;const w=window.open('','_blank');w.document.write(`<html><head><title>Invoice</title><style>body{font-family:sans-serif;padding:2rem;}h1{color:#b8960c;}</style></head><body><h1>LM AUTOS</h1><table><tr><th>Date</th><td>${currentInvView.fecha}</td></tr><tr><th>Buyer</th><td>${currentInvView.comprador}</td></tr><tr><th>ID</th><td>${currentInvView.identificacion}</td></tr><tr><th>Vehicle</th><td>${currentInvView.modelo}</td></tr><tr><th>Price</th><td>COP $${currentInvView.precioAuto.toLocaleString()}</td></tr><tr><th>Decoration</th><td>${currentInvView.decoracion} - COP $${currentInvView.precioDecoracion.toLocaleString()}</td></tr><tr><th>Payment</th><td>${currentInvView.metodoPago}</td></tr><tr class="total"><th>TOTAL</th><td>COP $${currentInvView.total.toLocaleString()}</td></tr></table></body></html>`);w.print();}
-function downloadInvPDF(){if(!currentInvView)return;html2pdf().from(document.getElementById('invDetailBody')).set({margin:1,filename:`Invoice_${currentInvView.id}.pdf`}).save();}
-
-function renderInventoryTable(){
-  document.getElementById('invTable').innerHTML=vehicles.map(v=>`<tr><td><img src="${v.imagen}" class="tbl-img" onerror="this.src='data:image/svg+xml,<svg><rect fill=%22%23222%22 width=%22100%22 height=%2260%22/><text fill=%22%23666%22>🚗</text></svg>'"></td><td style="font-weight:600;">${v.titulo}</td><td>COP $${v.precio.toLocaleString()}</td><td style="color:rgba(255,255,255,.45);">COP $${v.costo.toLocaleString()}</td><td style="color:var(--gold);">${v.hp}</td><td>${v.aceleracion}</td><td>${v.velMax}</td><td>${v.año}</td><td>${v.vendido?'<span class="badge-sold">SOLD</span>':'<span class="badge-ok">Available</span>'}</td><td><button class="btn-tbl btn-edit" onclick="openCarForm(${v.id})"><i class="fas fa-edit"></i></button><button class="btn-tbl btn-sell" onclick="toggleSold(${v.id})">${v.vendido?'<i class="fas fa-undo"></i>':'<i class="fas fa-check"></i>'}</button><button class="btn-tbl btn-del" onclick="deleteCar(${v.id})"><i class="fas fa-trash"></i></button></td></tr>`).join('');
-}
-function openCarForm(id){document.getElementById('carFormId').value=id||'';document.getElementById('carFormTitle').textContent=id?'Edit':'Add';if(id){const v=vehicles.find(x=>x.id===id);if(v){document.getElementById('cf_name').value=v.titulo;document.getElementById('cf_price').value=v.precio;document.getElementById('cf_cost').value=v.costo;document.getElementById('cf_year').value=v.año;document.getElementById('cf_hp').value=v.hp;document.getElementById('cf_acc').value=v.aceleracion;document.getElementById('cf_top').value=v.velMax;document.getElementById('cf_km').value=v.km;document.getElementById('cf_img').value=v.imagen;document.getElementById('cf_vid').value=v.video||'';document.getElementById('cf_desc').value=v.descripcion;}}else{['cf_name','cf_price','cf_cost','cf_year','cf_hp','cf_acc','cf_top','cf_km','cf_img','cf_vid','cf_desc'].forEach(id=>document.getElementById(id).value='');}
-  document.getElementById('carFormModal').style.display='flex';
-}
-function saveCarForm(){const id=document.getElementById('carFormId').value;const data={titulo:document.getElementById('cf_name').value.trim(),precio:+document.getElementById('cf_price').value,costo:+document.getElementById('cf_cost').value,año:+document.getElementById('cf_year').value,hp:document.getElementById('cf_hp').value.trim(),aceleracion:document.getElementById('cf_acc').value.trim(),velMax:document.getElementById('cf_top').value.trim(),km:+document.getElementById('cf_km').value,imagen:document.getElementById('cf_img').value.trim(),video:document.getElementById('cf_vid').value.trim()||null,descripcion:document.getElementById('cf_desc').value.trim()};if(!data.titulo||!data.precio){showToast('Name and price required');return;}
-  if(id){const idx=vehicles.findIndex(v=>v.id===+id);vehicles[idx]={...vehicles[idx],...data};}else{vehicles.push({...data,id:Date.now(),vendido:false,fechaVenta:null,precioVentaReal:null});}
-  saveVehicles();renderModels();renderAdminData();closeGModal('carFormModal');showToast('Vehicle saved');}
-function deleteCar(id){if(confirm('Delete?')){vehicles=vehicles.filter(v=>v.id!==id);saveVehicles();renderModels();renderAdminData();showToast('Deleted');}}
-function toggleSold(id){const v=vehicles.find(x=>x.id===id);v.vendido=!v.vendido;v.fechaVenta=v.vendido?new Date().toISOString():null;v.precioVentaReal=v.vendido?v.precio:null;saveVehicles();renderModels();renderAdminData();showToast(v.vendido?'Marked SOLD':'Reactivated');}
-
-function renderProductsTable(){
-  document.getElementById('prodTable').innerHTML=products.map(p=>`<tr><td style="font-weight:600;">${p.nombre}</td><td>COP $${p.precio.toLocaleString()}</td><td style="color:rgba(255,255,255,.45);">COP $${p.costo.toLocaleString()}</td><td>${p.stock}</td><td><button class="btn-tbl btn-edit" onclick="openProductForm(${p.id})"><i class="fas fa-edit"></i></button><button class="btn-tbl btn-del" onclick="deleteProd(${p.id})"><i class="fas fa-trash"></i></button></td></tr>`).join('');
-}
-function openProductForm(id){document.getElementById('pf_id').value=id||'';document.getElementById('prodFormTitle').textContent=id?'Edit':'Add';if(id){const p=products.find(x=>x.id===id);if(p){document.getElementById('pf_name').value=p.nombre;document.getElementById('pf_price').value=p.precio;document.getElementById('pf_cost').value=p.costo;document.getElementById('pf_stock').value=p.stock;}}else{['pf_name','pf_price','pf_cost','pf_stock'].forEach(i=>document.getElementById(i).value='');}
-  document.getElementById('prodFormModal').style.display='flex';
-}
-function saveProductForm(){const id=document.getElementById('pf_id').value;const data={nombre:document.getElementById('pf_name').value.trim(),precio:+document.getElementById('pf_price').value,costo:+document.getElementById('pf_cost').value,stock:+document.getElementById('pf_stock').value};if(!data.nombre){showToast('Name required');return;}
-  if(id){const idx=products.findIndex(p=>p.id===+id);products[idx]={...products[idx],...data};}else{products.push({...data,id:Date.now()});}
-  saveProducts();renderProductsTable();closeGModal('prodFormModal');showToast('Product saved');}
-function deleteProd(id){if(confirm('Delete?')){products=products.filter(p=>p.id!==id);saveProducts();renderProductsTable();showToast('Deleted');}}
-
-function exportExcel(){if(typeof XLSX==='undefined'){showToast('Excel not loaded');return;}const wb=XLSX.utils.book_new();XLSX.utils.book_append_sheet(wb,XLSX.utils.json_to_sheet(vehicles.filter(v=>v.vendido).map(v=>({Name:v.titulo,Price:v.precio,Year:v.año}))),'Sold');XLSX.utils.book_append_sheet(wb,XLSX.utils.json_to_sheet(invoices.map(i=>({Date:i.fecha,Model:i.modelo,Buyer:i.comprador,Total:i.total}))),'Invoices');XLSX.writeFile(wb,'LM_Autos_Report.xlsx');showToast('Excel downloaded');}
-
-const botReplies=['Our specialists are available. Which model interests you?','Flower decoration makes every delivery special.','We offer flexible financing.','Located in Valledupar, Colombia.','The Bugatti Chiron is our most exclusive model.'];
-function toggleChat(){const b=document.getElementById('chatBox');b.style.display=b.style.display==='block'?'none':'block';document.getElementById('chatBadge').style.display='none';}
-function sendMsg(){const inp=document.getElementById('chatInput'),txt=inp.value.trim();if(!txt)return;const msgs=document.getElementById('chatMsgs');msgs.innerHTML+=`<div class="msg-user">${txt}</div>`;inp.value='';msgs.scrollTop=msgs.scrollHeight;setTimeout(()=>{msgs.innerHTML+=`<div class="msg-bot">${botReplies[botIdx%botReplies.length]}</div>`;botIdx++;msgs.scrollTop=msgs.scrollHeight;},700);}
-function toggleMenu(){document.getElementById('sideMenu').classList.toggle('open');document.getElementById('overlay').classList.toggle('active');}
-function closeMenu(){document.getElementById('sideMenu').classList.remove('open');document.getElementById('overlay').classList.remove('active');}
-function toggleCat(id){document.getElementById(id).classList.toggle('open');}
-function closeGModal(id){document.getElementById(id).style.display='none';}
-function showToast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),3000);}
-function openLang(){document.getElementById('langModal').style.display='flex';}
-function setLang(lang,el){currentLang=lang;localStorage.setItem('lmLang',lang);document.querySelectorAll('.lang-opt').forEach(o=>o.classList.remove('active'));el.classList.add('active');document.getElementById('langModal').style.display='none';showToast('Language: '+lang.toUpperCase());}
-let currentLang=localStorage.getItem('lmLang')||'en';
-window.addEventListener('scroll',()=>{document.getElementById('header').classList.toggle('scrolled',window.scrollY>60);});
-document.addEventListener('mousemove',e=>{document.getElementById('cursor').style.left=e.clientX+'px';document.getElementById('cursor').style.top=e.clientY+'px';setTimeout(()=>{document.getElementById('cursorRing').style.left=e.clientX+'px';document.getElementById('cursorRing').style.top=e.clientY+'px';},80);});
-
-// Particles generator
-function createParticles() {
-  const container = document.getElementById('particles');
-  for(let i = 0; i < 50; i++) {
-    const particle = document.createElement('div');
-    particle.className = 'particle';
-    const size = Math.random() * 4 + 2;
-    particle.style.width = size + 'px';
-    particle.style.height = size + 'px';
-    particle.style.left = Math.random() * 100 + '%';
-    particle.style.bottom = Math.random() * 100 + '%';
-    particle.style.animationDelay = Math.random() * 20 + 's';
-    particle.style.animationDuration = 15 + Math.random() * 20 + 's';
-    container.appendChild(particle);
+  detailCurrentCar = m;
+  document.getElementById('detTag').textContent = `${m.año} · ${m.km.toLocaleString()} km · ${m.hp}`;
+  document.getElementById('detName').textContent = m.titulo;
+  document.getElementById('detPrice').textContent = `COP $${m.precio.toLocaleString()}`;
+  
+  const img = document.getElementById('detailImg');
+  const vid = document.getElementById('detailVid');
+  if(vid) vid.style.display = 'none';
+  if(img) {
+    img.style.display = 'block';
+    img.src = m.imagen;
+    img.alt = m.titulo;
+    img.onerror = function() { this.src = 'https://placehold.co/800x500/1a1a1a/ffd700?text=LM+Autos'; };
   }
+  
+  document.getElementById('detDesc').textContent = m.descripcion;
+  document.getElementById('detSpecs').innerHTML = `
+    <div class="det-spec"><div class="det-spec-val">${m.hp}</div><div class="det-spec-lbl">Horsepower</div></div>
+    <div class="det-spec"><div class="det-spec-val">${m.aceleracion}</div><div class="det-spec-lbl">0–100 km/h</div></div>
+    <div class="det-spec"><div class="det-spec-val">${m.velMax}</div><div class="det-spec-lbl">Top Speed</div></div>
+    <div class="det-spec"><div class="det-spec-val">${m.año}</div><div class="det-spec-lbl">Year</div></div>
+    <div class="det-spec"><div class="det-spec-val">${m.km.toLocaleString()}</div><div class="det-spec-lbl">Kilometers</div></div>
+    <div class="det-spec"><div class="det-spec-val">$${m.precio.toLocaleString()}</div><div class="det-spec-lbl">COP Price</div></div>
+  `;
+  document.getElementById('detailPage').style.display = 'block';
+  document.body.style.overflow = 'hidden';
+  gsap.from('.det-body', {duration:.7, opacity:0, y:45});
 }
+
+function closeDetail(){
+  document.getElementById('detailPage').style.display = 'none';
+  document.body.style.overflow = '';
+}
+
+function openPurchaseFromDetail(){ if(detailCurrentCar) openPurchase(detailCurrentCar); }
+
+// RESTO DE FUNCIONES (openPurchase, confirmPurchase, etc.) - MANTENLAS IGUAL
+// ... (el resto de tu código sigue igual)
+
+renderModels(); renderMerch(); if(adminLoggedIn){ document.getElementById('adminPanel').style.display='block'; renderAdminData(); }
+</script>
 createParticles();
 
 gsap.registerPlugin(ScrollTrigger);
